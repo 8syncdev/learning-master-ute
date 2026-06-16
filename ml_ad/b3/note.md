@@ -1,13 +1,12 @@
 # Buổi b3 — Note
 
-## Câu hỏi
-Tại sao tập **train** (sau khi chuẩn hoá + cân bằng) dùng `fit_transform`, còn tập **test** chỉ dùng `transform`?
+## Q1. Vì sao train dùng `fit_transform`, test dùng `transform`?
 
-## Trả lời ngắn
-`fit` = **học tham số** từ dữ liệu. `transform` = **áp dụng** tham số đã học.
-Chỉ được phép học tham số từ **train**. Test phải dùng lại đúng tham số đó để mô phỏng dữ liệu "chưa từng thấy" → tránh **data leakage** (rò rỉ dữ liệu).
+**Hỏi:** Tại sao tập **train** (sau khi chuẩn hoá + cân bằng) dùng `fit_transform`, còn tập **test** chỉ dùng `transform`?
 
-## Giải thích chi tiết
+**Trả lời ngắn:** `fit` = **học tham số** từ dữ liệu. `transform` = **áp dụng** tham số đã học. Chỉ được phép học tham số từ **train**. Test phải dùng lại đúng tham số đó để mô phỏng dữ liệu "chưa từng thấy" → tránh **data leakage** (rò rỉ dữ liệu).
+
+**Chi tiết:**
 
 ### 1. `fit` và `transform` làm gì
 Với `StandardScaler`:
@@ -41,7 +40,7 @@ Cân bằng lớp (SMOTE / oversampling / undersampling) cũng **chỉ áp dụn
 
 > Quy tắc vàng: **mọi thứ học tham số (`fit`) đều chỉ được nhìn train.** Test chỉ đi qua `transform`, không bao giờ `fit`.
 
-## Ví dụ code
+**Ví dụ:**
 ```python
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
