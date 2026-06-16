@@ -262,3 +262,61 @@ Công thức phần cắt lần 2: `val_size_2 = val_mong_muốn / (1 - test_siz
 - **Hanoi housing** (giá nhà, hồi quy): nếu tin đăng có **ngày** → chia theo thời gian để mô phỏng "dự đoán giá tương lai"; nếu không → random split + k-fold CV (regression không stratify theo giá trừ khi bin hoá).
 
 > Tóm: con số tỉ lệ là thứ yếu. Thứ tự đúng + **không leakage** (chia trước khi xử lý, theo thời gian/nhóm khi cần) + **test khoá kín** mới là cái làm kết quả đáng tin ngoài thực tế.
+
+## Q6. K-Fold Cross-Validation — apply ra sao, chọn loại Fold nào & vì sao
+
+**Hỏi:** Apply K-Fold thế nào, in ra từng fold? Nên dùng loại Fold nào và vì sao? (ghi chú kĩ, dễ đọc trên mobile)
+
+**Trả lời ngắn:** K-Fold chia dữ liệu thành **K khối**; mỗi vòng lấy **1 khối làm val**, K−1 khối còn lại làm train; lặp K lần → mỗi mẫu được val đúng 1 lần. Kết quả báo cáo **mean ± std**. **Chọn loại Fold theo bản chất dữ liệu**, không mặc định một loại.
+
+**Vì sao:** 1 lần chia train/val có thể "ăn may" hoặc "ăn rủi" → điểm không tin cậy. K-Fold lấy trung bình nhiều lần chia → ước lượng **ổn định** hơn, và `std` cho biết model **nhạy** với cách chia tới đâu (std lớn = variance cao).
+
+**Chi tiết:**
+
+### Cách K-Fold chạy
+- Chia train-full thành K khối đều nhau (vd K=5 → mỗi khối ~20%).
+- Vòng i: khối i = val, phần còn lại = train.
+- Lặp K vòng → K điểm số → lấy `mean ± std`.
+- `test` **tách riêng (held-out)**, KHÔNG tham gia CV.
+
+### Chọn loại Fold nào — và lý do
+- **KFold** (chia ngẫu nhiên):
+  - dùng cho **hồi quy** / dữ liệu độc lập (i.i.d.).
+  - vì không có "lớp" để phải giữ tỉ lệ.
+- **StratifiedKFold** (giữ tỉ lệ lớp):
+  - dùng cho **phân loại**, nhất là **mất cân bằng**.
+  - vì KFold thường dễ tạo fold **thiếu lớp hiếm** → điểm dao động/sai.
+- **GroupKFold** (giữ nhóm 1 phía):
+  - khi có **thực thể trùng** (cùng user, cùng nhà, cùng phiên).
+  - vì cùng nhóm ở cả train lẫn val = **leakage theo nhóm**.
+- **TimeSeriesSplit** (train quá khứ → val tương lai):
+  - khi dữ liệu có **thời gian** / bài forecasting.
+  - vì shuffle ngẫu nhiên cho model "thấy tương lai" → **leakage thời gian**.
+
+### Thứ tự ĐÚNG trong mỗi fold
+- Cân bằng + `fit` (vectorizer/scaler/encoder) đặt **trong** vòng lặp, **chỉ** trên train-fold.
+- val-fold chỉ `transform`. Dễ nhất: gói vào **Pipeline** rồi `pipe.fit(train_fold)`.
+- Lý do: làm ngoài vòng lặp (trên cả dữ liệu) = val-fold rò rỉ vào bước học → điểm ảo.
+
+### Kết quả thực nghiệm (notebook `Pipeline_Split_Balance_CV.ipynb`)
+- **ViHSD → StratifiedKFold(5):** F1-macro = **0.6231 ± 0.0083** (5 fold sát nhau → ổn định).
+- **Leakage demo:** cân bằng TRƯỚC khi chia → **0.9378** (ảo), so với làm đúng **0.6231** → thổi phồng **+0.31**.
+- **Hanoi housing → KFold(5):** RMSE = **42.30 ± 0.67** triệu/m², R² = **0.313**.
+- **Hanoi housing → TimeSeriesSplit(5):** RMSE = **42.02 ± 1.41**; train lớn dần (13.5k → 67.6k), val luôn là quãng thời gian kế tiếp.
+
+**Ví dụ:**
+```python
+# Phân loại lệch lớp -> StratifiedKFold (giữ tỉ lệ lớp)
+from sklearn.model_selection import StratifiedKFold
+skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+for i, (tr, va) in enumerate(skf.split(X, y), 1):
+    # cân bằng + fit vectorizer CHỈ trên X[tr]; transform X[va]
+    ...
+
+# Hồi quy -> KFold; có thời gian -> TimeSeriesSplit
+from sklearn.model_selection import KFold, TimeSeriesSplit
+kf  = KFold(n_splits=5, shuffle=True, random_state=42)   # i.i.d.
+tss = TimeSeriesSplit(n_splits=5)                         # train quá khứ -> val tương lai
+```
+
+> Tóm: K-Fold = lấy trung bình nhiều lần chia cho ổn định. **Loại Fold chọn theo dữ liệu**: lệch lớp → Stratified; nhóm trùng → Group; có thời gian → TimeSeries; còn lại → KFold.
