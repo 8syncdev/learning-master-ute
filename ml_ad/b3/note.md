@@ -213,3 +213,52 @@ Xtr, Xte, ytr, yte = train_test_split(
 ```
 
 > Quy tắc: bài phân loại → mặc định `stratify=y`. Đặc biệt khi lớp hiếm, đây là cách duy nhất đảm bảo cả train lẫn test đều "nhìn thấy" lớp đó theo đúng tỉ lệ.
+
+## Q5. Chia train / val / test chuẩn nhất — chia mấy phần, cắt ra sao (real-world)
+
+**Hỏi:** Cách chia tập train/test/val chuẩn nhất? Chia mấy phần, cắt ra sao? (theo thực tế)
+
+**Trả lời ngắn:** Chia **3 tập** vai trò khác nhau: **train** (học), **val/dev** (tune & chọn model), **test** (đánh giá cuối, khoá lại chỉ chạm 1 lần). Tỉ lệ **KHÔNG cố định** — tuỳ kích thước data: data nhỏ ~ 60/20/20 hoặc 70/15/15; data lớn (triệu+) ~ 98/1/1. Trong thực tế, điều quan trọng hơn con số là: **chia theo thời gian** nếu có yếu tố thời gian, **cùng phân phối với production**, và **khoá test set**.
+
+**Chi tiết:**
+
+### 1. Ba tập làm gì
+- **train** — học tham số model.
+- **validation (dev)** — tune hyperparameter, chọn model, early stopping. Chạm **nhiều lần**.
+- **test** — đo hiệu năng cuối cùng trên dữ liệu "chưa từng thấy". Chạm **đúng 1 lần**, ở cuối.
+
+### 2. Tỉ lệ — theo lượng data, không phải con số thần thánh
+- **Nhỏ/vừa** (vài nghìn → vài chục nghìn mẫu): `60/20/20`, `70/15/15`, `80/10/10`.
+- **Rất lớn** (≥ 1 triệu): `98/1/1` — vì 1% đã là chục nghìn mẫu, quá đủ để chỉ số ổn định; phần còn lại dồn hết cho train.
+- Quy tắc thật: val/test chỉ cần **đủ lớn để metric ổn định** (vài nghìn mẫu là ổn), không cần phải đúng 20%.
+
+### 3. Cắt thế nào (sklearn — `train_test_split` 2 lần)
+`train_test_split` không tách thẳng 3 phần → tách **2 lần**: lấy test ra trước, rồi cắt val từ phần còn lại.
+```python
+from sklearn.model_selection import train_test_split
+
+# B1: tách TEST (20%) ra trước rồi KHOÁ lại
+X_tmp, X_test, y_tmp, y_test = train_test_split(
+    X, y, test_size=0.20, stratify=y, random_state=42)
+
+# B2: cắt VAL từ phần còn lại. Muốn val = 20% tổng → 0.20/0.80 = 0.25
+X_train, X_val, y_train, y_val = train_test_split(
+    X_tmp, y_tmp, test_size=0.25, stratify=y_tmp, random_state=42)
+
+# Kết quả: train 60% / val 20% / test 20%
+```
+Công thức phần cắt lần 2: `val_size_2 = val_mong_muốn / (1 - test_size)`.
+(Nhớ: scaler `fit` **chỉ trên train**, rồi `transform` val/test — xem Q1; cân bằng cũng **chỉ trên train**.)
+
+### 4. Real-world — mấy điều textbook hay bỏ
+- **Chia theo thời gian** (time-based) cho dữ liệu có mốc thời gian / bài toán production: train = **quá khứ**, val/test = **tương lai**, **KHÔNG shuffle**. Shuffle ngẫu nhiên = leakage thời gian → điểm đẹp ảo, deploy là sập.
+- **Cùng phân phối với production**: val & test phải giống dữ liệu thật lúc chạy thật. Tune trên phân phối lệch = tối ưu nhầm mục tiêu.
+- **Group split**: nếu nhiều dòng cùng một thực thể (cùng user, cùng căn nhà, cùng phiên) → gom **cùng một phía** (`GroupKFold` / split theo group), tránh model "thấy" thực thể đó ở cả train lẫn test.
+- **K-fold CV khi data ít**: thay val cố định bằng **k-fold cross-validation** trên (train+val) để tune, vẫn giữ **test held-out** riêng. Tận dụng hết data, ước lượng ổn định hơn.
+- **Khoá test**: chỉ mở 1 lần ở cuối. Tune đi tune lại theo test = overfit lên test set ("test set rot").
+
+### 5. Liên hệ dataset trong repo
+- **ViHSD** (comment MXH, 3 lớp lệch): `stratify=y` ở **cả 2 lần** cắt. Nếu comment có timestamp → cân nhắc chia theo thời gian.
+- **Hanoi housing** (giá nhà, hồi quy): nếu tin đăng có **ngày** → chia theo thời gian để mô phỏng "dự đoán giá tương lai"; nếu không → random split + k-fold CV (regression không stratify theo giá trừ khi bin hoá).
+
+> Tóm: con số tỉ lệ là thứ yếu. Thứ tự đúng + **không leakage** (chia trước khi xử lý, theo thời gian/nhóm khi cần) + **test khoá kín** mới là cái làm kết quả đáng tin ngoài thực tế.
