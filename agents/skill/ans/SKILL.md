@@ -24,7 +24,13 @@ chuẩn hoá: file đặt ở đâu, định dạng mỗi entry, và bước com
    - nếu liên quan code trong repo, đọc code đó và bám sát (đúng tên hàm/biến);
    - kèm ví dụ code chạy được khi câu hỏi mang tính thực hành.
 4. **Append theo template** bên dưới.
-5. **Commit + push**: `git add ml_ad/b{N}/note.md && git commit -m "b{N}: note — <tóm tắt câu hỏi>" && git push`.
+5. **Auto commit & push — BẮT BUỘC.** Sau mỗi lần tạo/append note, **luôn tự động** commit và push, **không hỏi lại**:
+   ```bash
+   git add ml_ad/b{N}/note.md && \
+   git commit -m "b{N}: note Q{n} — <tóm tắt câu hỏi>" && \
+   git push -q origin main
+   ```
+   Message gắn số `Q{n}` của entry vừa thêm. Đây là bước kết thúc bắt buộc — note chưa push coi như chưa xong.
 
 ## Template mỗi entry
 Append nguyên khối này (đánh số `Q` tăng dần trong buổi):
