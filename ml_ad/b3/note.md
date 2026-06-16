@@ -133,3 +133,42 @@ elif gap > 0.1:
 else:
     print("Cân bằng tốt: gap nhỏ, val cao")
 ```
+
+## Q3. Nhận biết mô hình bias cao / variance cao — tại sao bị, ví dụ dễ hiểu
+
+**Hỏi:** Làm sao nhận biết mô hình bias cao, variance cao? Tại sao bị? Cho ví dụ dễ hiểu.
+
+**Trả lời ngắn:** Nhìn **2 con số: train error và validation error**. Cả hai **đều cao** và sát nhau → **bias cao** (model quá cứng, học chưa tới). Train **rất thấp** nhưng validation **cao** (gap lớn) → **variance cao** (model quá nhạy, học cả nhiễu). Bias cao do model quá đơn giản; variance cao do model quá phức tạp / ít dữ liệu.
+
+**Chi tiết:**
+
+### 1. Nhận biết bias cao
+- **Dấu hiệu:** train error **cao**, validation error **cao**, hai số **gần bằng nhau** (cùng tệ).
+- Thêm dữ liệu **không cứu được** — đường train và val đều phẳng ở mức tệ.
+- Dự đoán đơn điệu, bỏ qua pattern rõ ràng trong dữ liệu.
+
+### 2. Nhận biết variance cao
+- **Dấu hiệu:** train error **rất thấp** (gần như hoàn hảo) nhưng validation error **cao** → **gap lớn**.
+- **Không ổn định:** đổi một phần nhỏ tập train → model thay đổi nhiều, kết quả nhảy lung tung.
+- Thêm dữ liệu **giúp ích** — gap thu hẹp dần.
+
+### 3. Tại sao bị
+- **Bias cao:** giả định của model quá đơn giản/cứng so với thực tế (dùng đường thẳng cho quan hệ cong, cây quá nông, regularization quá mạnh). Model **không đủ sức** biểu diễn pattern → sai lệch hệ thống.
+- **Variance cao:** model quá linh hoạt (nhiều tham số, cây quá sâu, polynomial bậc cao) + **ít dữ liệu** → nó "thuộc lòng" cả nhiễu của tập train thay vì học quy luật chung → gặp dữ liệu mới là sai.
+
+### 4. Ví dụ dễ hiểu
+
+**a) Bắn cung vào bia (kinh điển):**
+- **Bias cao, variance thấp:** các mũi tên chụm nhau nhưng **lệch hẳn** khỏi tâm về một phía → sai *đều đặn* một kiểu.
+- **Variance cao, bias thấp:** các mũi tên **trung bình quanh tâm** nhưng **tản mác** khắp nơi → lúc trúng lúc trượt, không ổn định.
+- Lý tưởng: chụm **và** đúng tâm (bias thấp, variance thấp).
+
+**b) Học sinh ôn thi:**
+- **Bias cao:** học sinh chỉ học **một công thức** rồi áp cho mọi bài → bài tập ở nhà cũng sai, đi thi cũng sai (sai như nhau).
+- **Variance cao:** học sinh **học thuộc lòng đáp án** từng bài trong đề cương → làm lại đề cương đúng 100%, nhưng đề thi đổi số là trượt.
+
+**c) Vẽ đường khớp dữ liệu cong:**
+- **Bias cao:** ép một **đường thẳng** qua đám điểm hình chữ U → trượt xa ở hai đầu.
+- **Variance cao:** dùng **đa thức bậc rất cao** uốn éo đi qua *đúng từng điểm* (kể cả điểm nhiễu) → giữa các điểm thì sai bét, gặp điểm mới là lệch.
+
+> Mẹo nhớ: **bias = sai vì lười học (quá đơn giản)**; **variance = sai vì học vẹt (quá phức tạp)**. Chẩn đoán luôn nhìn cặp (train error, val error) và **gap** giữa chúng.
