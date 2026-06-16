@@ -20,7 +20,7 @@ chuẩn hoá: file đặt ở đâu, định dạng mỗi entry, và bước com
    không nói rõ → hỏi lại đúng 1 câu, hoặc dùng buổi đang làm việc gần nhất.
 2. **Định vị file** `ml_ad/b{N}/note.md`. Tạo nếu thiếu, đọc nếu đã có.
 3. **Soạn câu trả lời cho đúng — không bịa.** Trả lời phải chính xác về kỹ thuật:
-   - nêu trực tiếp kết luận trước, rồi lý do;
+   - nêu trực tiếp kết luận trước, rồi **LUÔN giải thích lý do (vì sao)** — bắt buộc;
    - nếu liên quan code trong repo, đọc code đó và bám sát (đúng tên hàm/biến);
    - kèm ví dụ code chạy được khi câu hỏi mang tính thực hành.
 4. **Append theo template** bên dưới.
@@ -42,6 +42,8 @@ Append nguyên khối này (đánh số `Q` tăng dần trong buổi):
 
 **Trả lời ngắn:** <1–3 câu chốt đáp án>
 
+**Vì sao:** <giải thích LÝ DO — cơ chế/nguyên nhân; nếu là lựa chọn (chọn X thay vì Y) phải nêu rõ lý do chọn. BẮT BUỘC, không bao giờ bỏ.>
+
 **Chi tiết:**
 - <ý 1: lý do/cơ chế>
 - <ý 2: ...>
@@ -53,6 +55,7 @@ Append nguyên khối này (đánh số `Q` tăng dần trong buổi):
 ````
 
 ## Nguyên tắc
+- **LUÔN GIẢI THÍCH LÝ DO TẠI SAO.** Mọi đáp án phải nêu *vì sao* (cơ chế / nguyên nhân), không chỉ "làm thế nào" hay kết luận suông. Có lựa chọn giữa nhiều phương án → bắt buộc nói rõ **lý do chọn cái này thay vì cái kia**.
 - **Tiếng Việt**, giữ nguyên thuật ngữ tiếng Anh (`fit_transform`, `data leakage`, ...).
 - Một entry = một câu hỏi. Nhiều câu hỏi → nhiều entry trong cùng `note.md`.
 - Ngắn gọn, đủ ý. Ưu tiên gạch đầu dòng hơn đoạn văn dài.
