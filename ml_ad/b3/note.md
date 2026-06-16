@@ -172,3 +172,44 @@ else:
 - **Variance cao:** dùng **đa thức bậc rất cao** uốn éo đi qua *đúng từng điểm* (kể cả điểm nhiễu) → giữa các điểm thì sai bét, gặp điểm mới là lệch.
 
 > Mẹo nhớ: **bias = sai vì lười học (quá đơn giản)**; **variance = sai vì học vẹt (quá phức tạp)**. Chẩn đoán luôn nhìn cặp (train error, val error) và **gap** giữa chúng.
+
+## Q4. Ý nghĩa của `stratify` khi chia dữ liệu
+
+**Hỏi:** `stratify` trong việc chia dữ liệu có ý nghĩa gì?
+
+**Trả lời ngắn:** `stratify` = **chia phân tầng**: giữ cho **tỉ lệ các lớp** (class distribution) trong tập train và test **giống y như** tập gốc. Quan trọng nhất với **dữ liệu mất cân bằng** — tránh việc chia ngẫu nhiên làm lớp hiếm bị thiếu/lệch ở một phía.
+
+**Chi tiết:**
+
+### 1. Vấn đề khi chia ngẫu nhiên
+Mặc định `train_test_split` chia **ngẫu nhiên**. Với dữ liệu lệch lớp, ngẫu nhiên có thể tạo train/test có tỉ lệ lớp khác hẳn tập gốc — thậm chí một lớp hiếm gần như **biến mất** khỏi test. Hậu quả:
+- Test không đại diện → chỉ số đánh giá (accuracy, F1) **không trung thực**.
+- Train thiếu mẫu lớp hiếm → model học kém lớp đó.
+
+### 2. `stratify` giải quyết gì
+Truyền `stratify=y` (y = nhãn lớp) → mỗi lớp được chia theo **đúng tỉ lệ** vào cả train lẫn test. Ví dụ lớp chiếm 10% ở tập gốc thì train và test đều ~10% lớp đó.
+
+### 3. Khi nào dùng
+- **Phân loại (classification)**, nhất là **mất cân bằng** hoặc tập nhỏ → nên luôn `stratify=y`.
+- **Hồi quy (regression)** với target liên tục → `stratify` trực tiếp **không dùng được** (phải bin hoá target thành nhóm trước nếu muốn phân tầng).
+- Trong cross-validation, tương đương là `StratifiedKFold`.
+
+### 4. Liên hệ dataset trong repo
+- **ViHSD** (CLEAN / OFFENSIVE / HATE) — 3 lớp **mất cân bằng** → bắt buộc `stratify=y` để mỗi lớp đều có mặt đúng tỉ lệ ở train/test.
+- **Hanoi housing** (giá nhà, liên tục) — bài hồi quy → **không** stratify theo giá (trừ khi chia giá thành khoảng).
+
+**Ví dụ:** dữ liệu 1000 mẫu, lớp 0 = 90%, lớp 1 = 10%, `test_size=0.2`.
+```python
+from sklearn.model_selection import train_test_split
+
+# KHÔNG stratify: tỉ lệ lớp 1 ở test có thể trôi (5%? 15%?), không ổn định
+Xtr, Xte, ytr, yte = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# CÓ stratify: test giữ đúng ~10% lớp 1 như tập gốc
+Xtr, Xte, ytr, yte = train_test_split(
+    X, y, test_size=0.2, stratify=y, random_state=42
+)
+# y_test: lớp 0 ≈ 180 mẫu (90%), lớp 1 ≈ 20 mẫu (10%) — phản ánh đúng phân phối gốc
+```
+
+> Quy tắc: bài phân loại → mặc định `stratify=y`. Đặc biệt khi lớp hiếm, đây là cách duy nhất đảm bảo cả train lẫn test đều "nhìn thấy" lớp đó theo đúng tỉ lệ.
