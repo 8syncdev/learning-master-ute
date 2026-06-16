@@ -48,6 +48,33 @@ Dùng đúng **2 file CSV** trong zip (`ViHSD.csv`, `Hanoi_housing_dataset.csv`)
 
 > **Quy tắc vàng:** mọi bước **học tham số từ dữ liệu** (`fit` vectorizer/scaler/encoder, cân bằng bằng nhân bản) **chỉ được nhìn TRAIN**. `val`/`test` chỉ đi qua `transform`. Lý do: val/test phải đóng vai "dữ liệu chưa từng thấy" → nếu cho chúng tham gia `fit`, điểm đánh giá **đẹp ảo** (data leakage), ra thực tế là sập.'''))
 
+c.append(("md", '''## Hình dung thực tế — 2 sản phẩm + phép ẩn dụ "kỳ thi"
+
+Đừng nghĩ đây là bài tập khô khan. Hai dataset = **hai tính năng sản phẩm thật**:
+- **ViHSD** → bộ **lọc bình luận độc hại** cho một app mạng xã hội VN (tự ẩn comment CLEAN/OFFENSIVE/HATE).
+- **Hanoi housing** → tính năng **gợi ý giá** khi user đăng tin bán nhà trên app bất động sản.
+
+### Ẩn dụ kỳ thi (nhớ cả đời)
+- **train** = *sách bài tập* để ôn.
+- **val** = *đề thi thử* — tự chấm để chỉnh cách học, chọn "tủ" (chọn model/tham số).
+- **test** = *kỳ thi thật* — **thi đúng 1 lần**, không được xem trước.
+- Lén xem đề thi thật để ôn = **gian lận** → điểm cao nhưng **giả** = đúng nghĩa *data leakage*.
+
+### Vì sao "chia trước, cân bằng sau, chỉ trên train"
+- Ngoài đời app nhận **~82% bình luận sạch**. Nếu đem *đề thi thử / kỳ thi thật* (val/test) trộn lại cho **50/50** rồi báo cáo F1 đẹp → sếp tưởng ngon, **deploy lên app gặp 82% sạch là sai bét**. ⇒ **val/test phải giống lưu lượng thật**, tuyệt đối không cân bằng.
+- Lớp **HATE/OFFENSIVE hiếm**, model "lười" học → ta **cho nó thấy nhiều ví dụ hiếm hơn lúc luyện** (oversample) — nhưng **chỉ lúc luyện (train)**.
+
+### Vì sao `fit` chỉ trên train
+Như **hiệu chỉnh cái cân** bằng số liệu cũ (train). Khách mới tới (test) thì **cân bằng đúng cái cân đó**, không chỉnh lại cân theo khách — nếu chỉnh lại là "đo gian".
+
+### Vì sao K-Fold & chọn loại Fold
+- **K-Fold** = thay vì 1 đề thi thử (dễ *hên xui*), làm **5 đề khác nhau** rồi lấy **điểm trung bình ± dao động** → biết **thực lực ổn định** hay ăn may.
+- **StratifiedKFold** (ViHSD) = chia 5 đề sao cho **đề nào cũng có đủ câu khó** (lớp HATE hiếm), không để 1 đề toàn câu dễ.
+- **TimeSeriesSplit** (giá nhà) = học **giá quá khứ để đoán giá tương lai**; cấm dùng giá tương lai đoán quá khứ — vì lúc deploy **làm gì có dữ liệu tương lai**.
+- **GroupKFold** = một người đăng 10 tin nhà na ná nhau → đừng để tin của **cùng người** vừa ở train vừa ở test (học tủ theo người).
+
+> Mục A6 sẽ cho thấy *cái giá của gian lận*: làm sai thứ tự → F1 nhảy lên **0.94 ảo**; làm đúng chỉ **0.62**. Như học thuộc đáp án đề thi thử rồi vào thi thật là rớt.'''))
+
 c.append(("code", '''import re
 import numpy as np
 import pandas as pd

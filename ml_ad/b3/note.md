@@ -320,3 +320,39 @@ tss = TimeSeriesSplit(n_splits=5)                         # train quá khứ -> 
 ```
 
 > Tóm: K-Fold = lấy trung bình nhiều lần chia cho ổn định. **Loại Fold chọn theo dữ liệu**: lệch lớp → Stratified; nhóm trùng → Group; có thời gian → TimeSeries; còn lại → KFold.
+
+## Q7. Hình dung thực tế — ví dụ dễ hiểu cho cả pipeline (ẩn dụ "kỳ thi")
+
+**Hỏi:** Giải thích kĩ hơn, lấy ví dụ dễ hiểu, hình dung như dự án thật.
+
+**Trả lời ngắn:** Coi 2 dataset là **2 tính năng sản phẩm**: ViHSD = bộ **lọc bình luận độc hại** cho app MXH; Hanoi = **gợi ý giá** cho app bất động sản. Dùng ẩn dụ **kỳ thi**: train = sách bài tập, val = đề thi thử, test = thi thật (1 lần, không xem trước).
+
+**Vì sao ẩn dụ này đúng:** nó khớp 1-1 với cơ chế chống leakage — "xem trước đề thi thật" chính là cho val/test tham gia bước `fit`, làm điểm đẹp ảo.
+
+**Chi tiết:**
+
+### Ẩn dụ kỳ thi
+- **train** = sách bài tập để ôn.
+- **val** = đề thi thử → tự chấm, chỉnh cách học, chọn "tủ" (chọn model/tham số).
+- **test** = thi thật → **đúng 1 lần**, không xem trước.
+- Lén xem đề thi thật để ôn = **gian lận** → điểm cao nhưng giả = **data leakage**.
+
+### Vì sao chia trước, cân bằng sau, chỉ train
+- App thật nhận **~82% bình luận sạch**. Nếu trộn val/test thành 50/50 rồi khoe F1 đẹp → **deploy lên app gặp 82% sạch là sai bét**.
+- ⇒ val/test **giữ đúng lưu lượng thật**; chỉ **train** mới được cân bằng (cho model thấy thêm ví dụ lớp hiếm lúc luyện).
+
+### Vì sao fit chỉ trên train
+- Như **hiệu chỉnh cái cân** bằng số liệu cũ (train).
+- Khách mới (test) phải cân bằng **đúng cái cân đó**, không chỉnh lại theo khách → nếu chỉnh là "đo gian".
+
+### Vì sao K-Fold & chọn loại Fold (ví dụ đời thường)
+- **K-Fold**: thay vì 1 đề thi thử (hên xui), làm **5 đề khác nhau** rồi lấy **điểm TB ± dao động** → biết thực lực ổn định hay ăn may.
+- **StratifiedKFold** (ViHSD): chia 5 đề sao cho **đề nào cũng đủ câu khó** (lớp HATE hiếm).
+- **TimeSeriesSplit** (giá nhà): học **giá quá khứ đoán giá tương lai**; cấm dùng tương lai đoán quá khứ — lúc deploy **làm gì có dữ liệu tương lai**.
+- **GroupKFold**: một người đăng 10 tin nhà na ná → đừng để tin **cùng người** vừa ở train vừa ở test (học tủ theo người).
+
+### Cái giá của "gian lận" (số thật trong notebook)
+- Làm **đúng** thứ tự: F1-macro = **0.62**.
+- Làm **sai** (cân bằng trước khi chia): F1 = **0.94** — nhưng **ảo**. Như học thuộc đáp án đề thi thử rồi vào thi thật là rớt về ~0.62.
+
+> Một câu cho cả buổi: **"Tách kỳ-thi-thật (test) ra trước; chỉ ôn trên sách bài tập (train); muốn biết thực lực thì thi thử nhiều đề (K-Fold) cho đúng kiểu dữ liệu."**
