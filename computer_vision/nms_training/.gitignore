@@ -1,0 +1,11 @@
+# Môi trường uv
+.venv/
+__pycache__/
+
+# Dữ liệu & checkpoint lớn (tải lại / train lại được)
+data/
+outputs/checkpoints/
+*.pth
+
+# GIỮ LẠI (commit): code, pyproject/uv.lock, report/his/README,
+# outputs/figures/*.png và outputs/logs/* — không nằm trong danh sách ignore trên.

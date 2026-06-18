@@ -16,6 +16,19 @@ Thư mục: [`non_maximum_suppression/`](non_maximum_suppression/)
 | `build_slides.py` | Bộ sinh `.pptx` từ Markdown — **chỉ dùng thư viện chuẩn Python** |
 | `NMS_slides.pptx` | Bộ slide đã sinh (18 trang, mở được bằng PowerPoint/LibreOffice/Google Slides) |
 
+### 2. Thực hành NMS — train detector thật + nghiên cứu (`nms_training/`)
+Thư mục: [`nms_training/`](nms_training/) — dự án `uv` chạy trên GPU (RTX 5080, torch cu128).
+
+| File | Nội dung |
+|---|---|
+| `train.py` | Train thật Faster R-CNN (Penn-Fudan) + checkpoint/resume + log |
+| `nms.py` / `metrics.py` | Greedy NMS từ đầu + AP@0.5/mAP tự viết |
+| `study_nms.py` | Sinh hình train + before/after NMS + sweep ngưỡng IoU |
+| `report_NMS_thuc_hanh.md` | **Báo cáo chi tiết** (ảnh train + kết quả thật + lỗi cần tránh) |
+| `his.md` | Nhật ký tiến độ + lệnh resume |
+
+Kết quả thật: AP@0.5 ≈ 0.99, mAP ≈ 0.82 (~1 phút trên RTX 5080); NMS gom 158 → 10 hộp trên ảnh đông.
+
 ## Sinh slide PowerPoint từ Markdown
 
 > **Trả lời câu hỏi "có skill nào để AI tạo slide pptx từ md research không?":**
