@@ -57,6 +57,7 @@ uv run python study_nms.py                       # sinh 5 figures + nms_sweep.cs
 - `NMS self-check OK` (greedy_nms tự viết trùng `torchvision.ops.nms` ở thr 0.3/0.5/0.7).
 - Ảnh val đông nhất: idx=92 (7 người). fig02: **raw 140 box → sau NMS@0.5 còn 8 box**.
 - Sweep (outputs/logs/nms_sweep.csv): thr 0.3/0.4/0.5/0.6/0.7/0.9 → avg_boxes 2.86/2.92/3.28/3.92/5.18/**21.68**; AP@0.5 0.9936→0.9469; recall=1.0 mọi thr.
+- **Phân tích sâu (nms_deep_dive.py):** trace số học `outputs/logs/nms_trace.txt` (raw 107 box score≥0.6; bước 1 giữ box điểm 0.997, xoá các box IoU 0.91–0.96); thêm 3 hình test thật: `06_gallery_before_after.png` (4 ảnh val), `07_nms_step_by_step.png` (NMS từng bước), `08_score_threshold_effect.png` (0.05→9, 0.3→8, 0.5→8, 0.7→7 box).
 
 ## 7. LỆNH RESUME (train thêm — KHÔNG làm lại từ đầu)
 ```bash
@@ -70,8 +71,8 @@ uv run python train.py --resume outputs/checkpoints/last.pth --epochs 24
 - [x] kiểm thử pipeline (8 epoch) + kiểm tra resume
 - [x] điều chỉnh phương pháp (LR scale, best theo mAP)
 - [x] RUN CHÍNH THỨC 20 epoch (best mAP 0.8308 @ epoch 8)
-- [x] 5 figures + nms_sweep.csv
-- [x] report_NMS_thuc_hanh.md (chuẩn học thuật + dễ hiểu + thuyết trình)
+- [x] 8 figures + nms_sweep.csv + nms_trace.txt
+- [x] report_NMS_thuc_hanh.md (links trích dẫn ở ĐẦU file + ý nghĩa từng tham số + phân tích sâu)
 - [x] README + .gitignore + link computer_vision/README.md
 
 ## 9. Lỗi gặp & cách đã chủ động tránh

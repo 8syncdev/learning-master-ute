@@ -1,0 +1,61 @@
+TRACE số học greedy-NMS@0.5 trên ảnh val #92 (raw, score>=0.6, 107 box)
+Quy ước: mỗi bước chọn box điểm cao nhất còn lại, xoá mọi box IoU>=0.5 với nó.
+
+Bước 1: GIỮ box điểm=0.997
+    - IoU với box (điểm=0.988) = 0.956  -> XOÁ 
+    - IoU với box (điểm=0.984) = 0.940  -> XOÁ 
+    - IoU với box (điểm=0.991) = 0.940  -> XOÁ 
+    - IoU với box (điểm=0.965) = 0.929  -> XOÁ 
+    - IoU với box (điểm=0.995) = 0.922  -> XOÁ 
+    - IoU với box (điểm=0.941) = 0.913  -> XOÁ 
+    => còn lại 92 box để xét tiếp
+Bước 2: GIỮ box điểm=0.997
+    - IoU với box (điểm=0.990) = 0.988  -> XOÁ 
+    - IoU với box (điểm=0.986) = 0.978  -> XOÁ 
+    - IoU với box (điểm=0.971) = 0.977  -> XOÁ 
+    - IoU với box (điểm=0.988) = 0.969  -> XOÁ 
+    - IoU với box (điểm=0.930) = 0.961  -> XOÁ 
+    - IoU với box (điểm=0.984) = 0.958  -> XOÁ 
+    => còn lại 75 box để xét tiếp
+Bước 3: GIỮ box điểm=0.997
+    - IoU với box (điểm=0.982) = 0.977  -> XOÁ 
+    - IoU với box (điểm=0.786) = 0.970  -> XOÁ 
+    - IoU với box (điểm=0.991) = 0.965  -> XOÁ 
+    - IoU với box (điểm=0.925) = 0.963  -> XOÁ 
+    - IoU với box (điểm=0.991) = 0.956  -> XOÁ 
+    - IoU với box (điểm=0.661) = 0.954  -> XOÁ 
+    => còn lại 63 box để xét tiếp
+Bước 4: GIỮ box điểm=0.996
+    - IoU với box (điểm=0.956) = 0.967  -> XOÁ 
+    - IoU với box (điểm=0.993) = 0.967  -> XOÁ 
+    - IoU với box (điểm=0.996) = 0.966  -> XOÁ 
+    - IoU với box (điểm=0.982) = 0.965  -> XOÁ 
+    - IoU với box (điểm=0.996) = 0.958  -> XOÁ 
+    - IoU với box (điểm=0.955) = 0.957  -> XOÁ 
+    => còn lại 46 box để xét tiếp
+Bước 5: GIỮ box điểm=0.996
+    - IoU với box (điểm=0.694) = 0.978  -> XOÁ 
+    - IoU với box (điểm=0.995) = 0.976  -> XOÁ 
+    - IoU với box (điểm=0.996) = 0.971  -> XOÁ 
+    - IoU với box (điểm=0.995) = 0.969  -> XOÁ 
+    - IoU với box (điểm=0.990) = 0.964  -> XOÁ 
+    - IoU với box (điểm=0.995) = 0.955  -> XOÁ 
+    => còn lại 29 box để xét tiếp
+Bước 6: GIỮ box điểm=0.994
+    - IoU với box (điểm=0.871) = 0.957  -> XOÁ 
+    - IoU với box (điểm=0.901) = 0.954  -> XOÁ 
+    - IoU với box (điểm=0.915) = 0.946  -> XOÁ 
+    - IoU với box (điểm=0.991) = 0.940  -> XOÁ 
+    - IoU với box (điểm=0.647) = 0.930  -> XOÁ 
+    - IoU với box (điểm=0.847) = 0.929  -> XOÁ 
+    => còn lại 15 box để xét tiếp
+Bước 7: GIỮ box điểm=0.993
+    - IoU với box (điểm=0.993) = 0.988  -> XOÁ 
+    - IoU với box (điểm=0.992) = 0.975  -> XOÁ 
+    - IoU với box (điểm=0.946) = 0.966  -> XOÁ 
+    - IoU với box (điểm=0.991) = 0.961  -> XOÁ 
+    - IoU với box (điểm=0.906) = 0.959  -> XOÁ 
+    - IoU với box (điểm=0.747) = 0.949  -> XOÁ 
+    => còn lại 0 box để xét tiếp
+
+Kết quả: từ 107 box giữ lại 7 box.

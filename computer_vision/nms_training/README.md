@@ -16,13 +16,14 @@ nms_training/
   nms.py                        # greedy_nms từ đầu (+ guard, assert format)
   train.py                      # train thật + checkpoint/resume + log jsonl
   study_nms.py                  # sinh figures + bảng sweep (chạy sau train)
-  report_NMS_thuc_hanh.md       # BÁO CÁO chi tiết (ảnh train + kết quả + lỗi cần tránh)
-  his.md                        # nhật ký tiến độ + lệnh resume
+  nms_deep_dive.py              # ảnh test thật: trace NMS từng bước, gallery, score_threshold
+  report_NMS_thuc_hanh.md       # BÁO CÁO chi tiết (links trích dẫn ở đầu, ảnh train+test, lỗi cần tránh)
+  his.md                        # nhật ký tiến độ + lệnh resume + finetune từ đâu
   data/                         # dataset (gitignore)
   outputs/
     checkpoints/{last,best}.pth # gitignore (lớn, tái tạo được)
-    figures/*.png               # hình cho báo cáo (commit)
-    logs/{training_log.jsonl,history.json,nms_sweep.csv}  # số liệu thật (commit)
+    figures/01..08_*.png        # 8 hình cho báo cáo (commit)
+    logs/{training_log.jsonl,history.json,nms_sweep.csv,nms_trace.txt}  # số liệu thật (commit)
 ```
 
 ## Chạy (tuần tự)
@@ -30,16 +31,17 @@ nms_training/
 cd computer_vision/nms_training
 uv run python check_env.py                 # phải in cap: (12, 0) + cuda matmul OK
 uv run python download_data.py             # images: 170 masks: 170
-uv run python train.py --epochs 8          # ~1 phút trên RTX 5080
-uv run python study_nms.py                 # figures + outputs/logs/nms_sweep.csv
+uv run python train.py --epochs 20         # ~2 phút trên RTX 5080
+uv run python study_nms.py                 # hình 01–05 + nms_sweep.csv
+uv run python nms_deep_dive.py             # hình 06–08 + nms_trace.txt
 ```
 
 ## Train thêm epoch (resume — không làm lại từ đầu)
 ```bash
-uv run python train.py --resume outputs/checkpoints/last.pth --epochs 13
+uv run python train.py --resume outputs/checkpoints/last.pth --epochs 24
 ```
 Tham số chính của `train.py`: `--epochs --batch-size --lr --val-size --seed --resume`.
 
 ## Kết quả (lần chạy thật — chi tiết ở report)
-- AP@0.5 ≈ **0.99**, mAP@[.5:.95] ≈ **0.82** sau 8 epoch (torch 2.11.0+cu128, RTX 5080).
-- NMS gom **158 → 10 hộp** trên ảnh đông; sweep ngưỡng IoU 0.3→0.9: avg_boxes 3.14→34.86, AP@0.5 0.9936→0.9531.
+- AP@0.5 ≈ **0.99**, mAP@[.5:.95] ≈ **0.83** (best @ epoch 8, run 20 epoch; torch 2.11.0+cu128, RTX 5080).
+- NMS gom **140 → 8 hộp** trên ảnh đông; sweep ngưỡng IoU 0.3→0.9: avg_boxes 2.86→21.68, AP@0.5 0.9936→0.9469.
