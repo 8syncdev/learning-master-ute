@@ -1,0 +1,17 @@
+# agents/skills.toml — project skill manifest (committed). `8sync harness` re-pulls these on any machine.
+
+[8sync-cli]
+src = "builtin:8sync-cli"
+when = "always"
+
+[codegraph]
+src = "builtin:codegraph"
+when = "always"
+
+[image-routing]
+src = "builtin:image-routing"
+when = "always"
+
+[karpathy]
+src = "builtin:karpathy"
+when = "always"
