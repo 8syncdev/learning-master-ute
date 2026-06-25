@@ -77,3 +77,11 @@ uv run python train.py --resume outputs/checkpoints/last.pth --epochs 24
 
 ## 9. Lỗi gặp & cách đã chủ động tránh
 - Không có lỗi chặn. Đã tránh: `torch.amp.autocast('cuda')`/`GradScaler('cuda')` (API mới, không dùng `torch.cuda.amp.*` deprecated); ép `ImageReadMode.RGB`; lọc box suy biến (w/h ≤ 0); guard NMS tensor rỗng; chạy NMS per-class.
+
+## 10. Bổ sung chuyên đề Sliding Window (tiền đề NMS)
+- **Lý do:** sliding window là nguồn sinh ra hộp chồng lấp → nối thẳng sang NMS; bổ sung dạng notebook đã chạy sẵn (ảnh nhúng) cho dễ xem/ghi chú.
+- **File mới:** `sliding_window.py` (thuần NumPy: `image_pyramid`, `sliding_window`, `count_windows`), `build_sliding_window_nb.py` (sinh notebook), `Sliding_Window_to_NMS.ipynb` (18 cell, đã thực thi, nhúng 7 hình), `outputs/figures/sw_01..07_*.png`.
+- **Bộ phát hiện thật:** HOG + SVM (`cv2.HOGDescriptor_getDefaultPeopleDetector`), `detectMultiScale(hitThreshold=0, finalThreshold=0)` → hộp thô; đưa vào `greedy_nms` của `nms.py`.
+- **Số liệu thật (FudanPed00001, GT=2 người):** kim tự tháp 7 tầng (hệ số 1.25); số cửa sổ theo bước nhảy 32/16/8 px = 462 / 1.764 / 6.943; HOG cho **118 hộp thô** (điểm SVM 0.02–1.86) → `greedy_nms@0.5` còn **6 hộp**. Quét `hitThreshold` 0.0/0.3/0.5/0.7 → hộp thô 118/61/36/17.
+- **Môi trường chạy notebook:** venv CPU tách riêng (`torch==2.12.1+cpu`, `opencv-python-headless`, `nbconvert`); không đụng `.venv`/pyproject gốc (cu128). Lệnh xem README mục "Chuyên đề Sliding Window".
+- **Cross-ref:** `report_NMS_thuc_hanh.md` mục 1.2 trỏ tới notebook; notebook mục 8 trỏ ngược lại report + `nms.py`.
