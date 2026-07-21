@@ -65,7 +65,7 @@ Decision fusion.
 \vspace{2pt}
 {\fontsize{10}{12}\selectfont
 \textbf{ABSTRACT}\\[3pt]
-Offensive and hateful comments spread rapidly on Vietnamese social networks, while purely neural detectors act as black boxes and purely lexicon-based rules lack coverage. This study proposes FRF-MLP, a hybrid model that integrates a Mamdani fuzzy rule system into a Multi-Layer Perceptron for three-class offensive language detection (CLEAN, OFFENSIVE, HATE). An offensiveness lexicon is first learned from the training data by the log-odds ratio with informative Dirichlet prior; three document-level linguistic variables (maximum offensiveness, offensive-token density, and targeting degree) are then fuzzified by trapezoidal membership functions and evaluated by seven Mamdani rules. The fuzzy component is fused with the MLP at two levels: 22 fuzzy features are concatenated to the TF-IDF input, and the defuzzified class distribution is combined with the MLP posterior through a convex weight selected on the development set. Experiments on the ViHSD benchmark (33,398 human-annotated comments) show that FRF-MLP reaches 84.46\% accuracy and 62.95\% macro-F1, improving the plain MLP by +1.92 macro-F1 points and surpassing the published Text-CNN, GRU, and multilingual BERT baselines in macro-F1 while requiring no pre-training and training in minutes on a CPU. Ablation results confirm that both fusion levels contribute complementary gains, and the fuzzy component additionally provides rule-level interpretability.
+Offensive and hateful comments spread rapidly on Vietnamese social networks, while purely neural detectors act as black boxes and purely lexicon-based rules lack coverage. This study proposes FRF-MLP, a hybrid model that integrates a Mamdani fuzzy rule system into a Multi-Layer Perceptron for three-class offensive language detection (CLEAN, OFFENSIVE, HATE). An offensiveness lexicon is first learned from the training data by the log-odds ratio with informative Dirichlet prior; three document-level linguistic variables (maximum offensiveness, offensive-token density, and targeting degree) are then fuzzified by trapezoidal membership functions and evaluated by seven Mamdani rules. The fuzzy component is fused with the MLP at two levels: 22 fuzzy features are concatenated to the TF-IDF input, and the defuzzified class distribution is combined with the MLP posterior through a convex weight selected on the development set. Experiments on the ViHSD benchmark (33,398 human-annotated comments) show that FRF-MLP reaches 84.33\% accuracy and 63.00\% macro-F1, improving the plain MLP by +2.05 macro-F1 points and surpassing the published Text-CNN, GRU, and multilingual BERT baselines in macro-F1 while requiring no pre-training and training in minutes on a CPU. Ablation results confirm that both fusion levels contribute complementary gains, and the fuzzy component additionally provides rule-level interpretability.
 }
 \end{minipage}
 \vspace{4pt}
@@ -105,7 +105,7 @@ Kết hợp quyết định.
 \vspace{2pt}
 {\fontsize{10}{12}\selectfont
 \textbf{TÓM TẮT}\\[3pt]
-Bình luận công kích và thù ghét lan truyền nhanh trên mạng xã hội Việt Nam, trong khi các bộ phát hiện thuần mạng nơ-ron hoạt động như hộp đen còn các hệ luật thuần từ điển lại thiếu độ phủ. Nghiên cứu này đề xuất FRF-MLP, mô hình lai tích hợp hệ luật mờ Mamdani vào Perceptron đa lớp (MLP) cho bài toán phân loại ba lớp CLEAN, OFFENSIVE, HATE. Trước hết, một từ điển mức độ công kích được học tự động từ tập huấn luyện bằng tỷ số log-odds với tiên nghiệm Dirichlet; ba biến ngôn ngữ ở mức văn bản (độ công kích cực đại, mật độ từ công kích, độ nhắm đích) sau đó được mờ hóa bằng hàm thành viên hình thang và suy diễn qua bảy luật Mamdani. Thành phần mờ được kết hợp với MLP ở hai mức: 22 đặc trưng mờ được nối vào đầu vào TF-IDF, và phân phối lớp giải mờ được cộng có trọng số với xác suất hậu nghiệm của MLP, trọng số chọn trên tập phát triển. Thực nghiệm trên bộ dữ liệu chuẩn ViHSD (33.398 bình luận gán nhãn thủ công) cho thấy FRF-MLP đạt 84,46\% accuracy và 62,95\% macro-F1, cải thiện +1,92 điểm macro-F1 so với MLP thuần và vượt các mô hình Text-CNN, GRU, BERT đa ngữ đã công bố về macro-F1, trong khi không cần tiền huấn luyện và chỉ huấn luyện vài phút trên CPU. Kết quả ablation xác nhận hai mức kết hợp đóng góp bổ sung cho nhau, đồng thời thành phần mờ cung cấp khả năng diễn giải ở mức luật.
+Bình luận công kích và thù ghét lan truyền nhanh trên mạng xã hội Việt Nam, trong khi các bộ phát hiện thuần mạng nơ-ron hoạt động như hộp đen còn các hệ luật thuần từ điển lại thiếu độ phủ. Nghiên cứu này đề xuất FRF-MLP, mô hình lai tích hợp hệ luật mờ Mamdani vào Perceptron đa lớp (MLP) cho bài toán phân loại ba lớp CLEAN, OFFENSIVE, HATE. Trước hết, một từ điển mức độ công kích được học tự động từ tập huấn luyện bằng tỷ số log-odds với tiên nghiệm Dirichlet; ba biến ngôn ngữ ở mức văn bản (độ công kích cực đại, mật độ từ công kích, độ nhắm đích) sau đó được mờ hóa bằng hàm thành viên hình thang và suy diễn qua bảy luật Mamdani. Thành phần mờ được kết hợp với MLP ở hai mức: 22 đặc trưng mờ được nối vào đầu vào TF-IDF, và phân phối lớp giải mờ được cộng có trọng số với xác suất hậu nghiệm của MLP, trọng số chọn trên tập phát triển. Thực nghiệm trên bộ dữ liệu chuẩn ViHSD (33.398 bình luận gán nhãn thủ công) cho thấy FRF-MLP đạt 84,33\% accuracy và 63,00\% macro-F1, cải thiện +2,05 điểm macro-F1 so với MLP thuần và vượt các mô hình Text-CNN, GRU, BERT đa ngữ đã công bố về macro-F1, trong khi không cần tiền huấn luyện và chỉ huấn luyện vài phút trên CPU. Kết quả ablation xác nhận hai mức kết hợp đóng góp bổ sung cho nhau, đồng thời thành phần mờ cung cấp khả năng diễn giải ở mức luật.
 }
 \end{minipage}
 \vspace{2pt}
@@ -123,7 +123,7 @@ Các cách tiếp cận hiện nay chia thành ba nhóm chính: (i) hệ luật/
 
 Các phương pháp lai nơ-ron--mờ đã được chứng minh hiệu quả ở nhiều bài toán phân loại [8]--[10], song với phát hiện ngôn từ công kích tiếng Việt, theo hiểu biết của chúng tôi chưa có nghiên cứu nào tích hợp hệ luật mờ học tự động từ dữ liệu vào MLP. Khoảng trống đó là động lực của nghiên cứu này. Đề xuất của chúng tôi, \textbf{FRF-MLP} (Fuzzy Rule-Fused MLP), gồm bốn bước chính: (1) tiền xử lý và biểu diễn TF-IDF hai mức từ/ký tự; (2) học từ điển công kích bằng log-odds có tiên nghiệm Dirichlet [12] và trích ba biến ngôn ngữ mức văn bản; (3) suy diễn mờ Mamdani qua bảy luật để thu 22 đặc trưng mờ và phân phối lớp mờ; (4) kết hợp hai mức — nối đặc trưng mờ vào đầu vào MLP và cộng có trọng số phân phối mờ với xác suất MLP.
 
-Đóng góp chính của nghiên cứu: (i) một quy trình xây dựng thành phần mờ \textit{hoàn toàn tự động từ dữ liệu} (không cần từ điển thủ công) cho tiếng Việt; (ii) cơ chế kết hợp hai mức đặc trưng--quyết định giữa hệ mờ và MLP; (iii) thực nghiệm đầy đủ trên ViHSD với ablation cho thấy mỗi mức kết hợp đều có đóng góp, tổng cộng +1,92 điểm macro-F1 so với MLP thuần và vượt các baseline đã công bố [1] về macro-F1 với chi phí tính toán thấp hơn nhiều lần.
+Đóng góp chính của nghiên cứu: (i) một quy trình xây dựng thành phần mờ \textit{hoàn toàn tự động từ dữ liệu} (không cần từ điển thủ công) cho tiếng Việt; (ii) cơ chế kết hợp hai mức đặc trưng--quyết định giữa hệ mờ và MLP; (iii) thực nghiệm đầy đủ trên ViHSD với ablation cho thấy mỗi mức kết hợp đều có đóng góp, tổng cộng +2,05 điểm macro-F1 so với MLP thuần và vượt các baseline đã công bố [1] về macro-F1 với chi phí tính toán thấp hơn nhiều lần.
 
 Phần còn lại của bài báo được bố cục như sau: Mục 2 trình bày các công trình liên quan; Mục 3 mô tả phương pháp đề xuất; Mục 4 trình bày kết quả thực nghiệm; Mục 5 kết luận và nêu hướng phát triển.
 
@@ -284,7 +284,7 @@ Hàm thành viên & hình thang, biên như Hình 2 & $\lambda$ & lưới $\{0; 
 
 \subsubsecvn{4.3.1. Kết quả của phương pháp đề xuất}
 
-FRF-MLP đạt 84,46\% accuracy, 62,95\% macro-F1 và 84,81\% F1 có trọng số trên tập kiểm tra, với $\lambda^{*} = 0{,}25$. Bảng 3 nêu chi tiết theo lớp: mô hình giữ độ chính xác cao ở CLEAN (F1 91,9\%) đồng thời đạt recall 45,0\% cho OFFENSIVE và 56,4\% cho HATE — hai lớp thiểu số vốn khó nhất. Hình 4a cho thấy đặc trưng mờ giúp mô hình khởi động tốt hơn hẳn (macro-F1 dev 60,1\% ngay epoch đầu so với 57,2\% của MLP thuần); Hình 4b cho thấy macro-F1 dev đạt đỉnh quanh $\lambda \in [0{,}15; 0{,}30]$ rồi giảm mạnh khi hệ mờ lấn át — đúng kỳ vọng: hệ luật chỉ nên đóng vai trò \textit{hiệu chỉnh} quyết định của MLP.
+FRF-MLP đạt 84,33\% accuracy, 63,00\% macro-F1 và 84,74\% F1 có trọng số trên tập kiểm tra, với $\lambda^{*} = 0{,}25$. Bảng 3 nêu chi tiết theo lớp: mô hình giữ độ chính xác cao ở CLEAN (F1 91,8\%) đồng thời đạt recall 45,3\% cho OFFENSIVE và 57,4\% cho HATE — hai lớp thiểu số vốn khó nhất. Hình 4a cho thấy đặc trưng mờ giúp mô hình khởi động tốt hơn hẳn (macro-F1 dev 60,1\% ngay epoch đầu so với 57,2\% của MLP thuần); Hình 4b cho thấy macro-F1 dev đạt đỉnh trên vùng phẳng $\lambda \in [0{,}15; 0{,}45]$ rồi giảm mạnh khi hệ mờ lấn át — đúng kỳ vọng: hệ luật chỉ nên đóng vai trò \textit{hiệu chỉnh} quyết định của MLP.
 
 \begin{table}[!htb]
 \tabcap{3}{Kết quả chi tiết theo lớp của FRF-MLP trên tập kiểm tra ViHSD (\%).}
@@ -294,11 +294,11 @@ FRF-MLP đạt 84,46\% accuracy, 62,95\% macro-F1 và 84,81\% F1 có trọng s�
 \toprule
 Lớp & Precision & Recall & F1 & Số mẫu\\
 \midrule
-CLEAN & 92,8 & 91,1 & 91,9 & 5.548\\
-OFFENSIVE & 38,8 & 45,0 & 41,7 & 444\\
-HATE & 54,2 & 56,4 & 55,3 & 688\\
+CLEAN & 92,8 & 90,8 & 91,8 & 5.548\\
+OFFENSIVE & 38,4 & 45,3 & 41,6 & 444\\
+HATE & 54,0 & 57,4 & 55,6 & 688\\
 \midrule
-Accuracy / Macro-F1 / Weighted-F1 & \multicolumn{4}{c}{84,46 / 62,95 / 84,81}\\
+Accuracy / Macro-F1 / Weighted-F1 & \multicolumn{4}{c}{84,33 / 63,00 / 84,74}\\
 \bottomrule
 \end{tabular}}
 \end{table}
@@ -311,7 +311,7 @@ Accuracy / Macro-F1 / Weighted-F1 & \multicolumn{4}{c}{84,46 / 62,95 / 84,81}\\
 
 \subsubsecvn{4.3.2. So sánh với các phương pháp khác}
 
-Bảng 4 so sánh với các kết quả đã công bố trên cùng phép chia ViHSD (thừa nhận lại số liệu từ [1]) và các baseline nội bộ; Hình 5 trực quan hóa nhóm nội bộ. Về macro-F1 — thước đo phù hợp với dữ liệu mất cân bằng — FRF-MLP (62,95\%) vượt mọi mô hình đã công bố, kể cả m-BERT cased (62,69\%), trong khi chỉ dùng ${\sim}10{,}3$ triệu tham số huấn luyện từ đầu trên CPU, so với ${\sim}178$ triệu tham số tiền huấn luyện đa ngữ của m-BERT. Accuracy của FRF-MLP thấp hơn nhóm Transformer (84,46\% so với 86,88\%): đây là đánh đổi có chủ đích của trọng số lớp — chấp nhận giảm nhẹ độ chính xác trên lớp đa số CLEAN để tăng recall các lớp thiểu số, mục tiêu thực tế của hệ kiểm duyệt.
+Bảng 4 so sánh với các kết quả đã công bố trên cùng phép chia ViHSD (thừa nhận lại số liệu từ [1]) và các baseline nội bộ; Hình 5 trực quan hóa nhóm nội bộ. Về macro-F1 — thước đo phù hợp với dữ liệu mất cân bằng — FRF-MLP (63,00\%) vượt mọi mô hình đã công bố, kể cả m-BERT cased (62,69\%), trong khi chỉ dùng ${\sim}10{,}3$ triệu tham số huấn luyện từ đầu trên CPU, so với ${\sim}178$ triệu tham số tiền huấn luyện đa ngữ của m-BERT. Accuracy của FRF-MLP thấp hơn nhóm Transformer (84,33\% so với 86,88\%): đây là đánh đổi có chủ đích của trọng số lớp — chấp nhận giảm nhẹ độ chính xác trên lớp đa số CLEAN để tăng recall các lớp thiểu số, mục tiêu thực tế của hệ kiểm duyệt.
 
 Đáng chú ý, hồi quy softmax có trọng số lớp là baseline rất mạnh về macro-F1 (64,50\%) — vượt cả các mô hình sâu, một hiện tượng đã biết trên không gian TF-IDF thưa chiều cao, nơi mô hình tuyến tính lồi hội tụ toàn cục còn MLP dễ quá khớp. Điều này không phủ nhận đóng góp của nghiên cứu: câu hỏi nghiên cứu đặt ra là \textit{tri thức mờ có cải thiện MLP hay không}, và kết quả ablation (Mục 4.3.3) trả lời khẳng định với mức cải thiện nhất quán; việc áp cùng cơ chế kết hợp mờ lên các bộ phân loại khác là hướng mở tự nhiên.
 
@@ -332,8 +332,8 @@ DistilBERT đa ngữ & [1] & 86,22 & 62,42\\
 \midrule
 Hệ mờ thuần & nghiên cứu này & 53,28 & 41,56\\
 Hồi quy softmax (trọng số lớp) & nghiên cứu này & 84,79 & \textbf{64,50}\\
-MLP thuần & nghiên cứu này & 83,80 & 61,03\\
-FRF-MLP (đề xuất) & nghiên cứu này & 84,46 & 62,95\\
+MLP thuần & nghiên cứu này & 83,82 & 60,95\\
+FRF-MLP (đề xuất) & nghiên cứu này & 84,33 & 63,00\\
 \bottomrule
 \end{tabular}}
 \end{table}
@@ -346,7 +346,7 @@ FRF-MLP (đề xuất) & nghiên cứu này & 84,46 & 62,95\\
 
 \subsubsecvn{4.3.3. Kết quả các phương pháp ablation}
 
-Bảng 5 tách đóng góp của từng mức kết hợp. Riêng mức quyết định (+0,61 macro-F1) hay riêng mức đặc trưng (+1,79) đều cải thiện MLP thuần; kết hợp cả hai đạt +1,92. Hệ mờ thuần chỉ đạt 41,56\% macro-F1 — quá yếu để đứng một mình nhưng \textit{bổ sung} hiệu quả: ma trận nhầm lẫn (Hình 6) cho thấy FRF-MLP tăng recall OFFENSIVE từ 40,5\% lên 45,0\% và HATE từ 54,7\% lên 56,4\% so với MLP thuần, đồng thời giảm 36 trường hợp OFFENSIVE bị nhầm sang HATE (101 $\rightarrow$ 75) — đúng vùng mà biến nhắm đích $T$ được thiết kế để phân giải. Điều này khẳng định giả thuyết trung tâm: tri thức ngôn ngữ mờ và thống kê TF-IDF mang thông tin bổ trợ, không trùng lặp.
+Bảng 5 tách đóng góp của từng mức kết hợp. Mức đặc trưng đóng vai trò chính (+1,92 macro-F1); mức quyết định đứng riêng gần như trung tính trên tập kiểm tra (+0,02, do $\lambda^{*}=0{,}45$ chọn trên tập dev nhỏ bị nhiễu), nhưng khi đặt \textit{trên nền} mức đặc trưng nó bổ sung +0,13 nữa, đưa tổng cải thiện lên +2,05 — hai mức mang thông tin bổ trợ chứ không thay thế nhau. Hệ mờ thuần chỉ đạt 41,56\% macro-F1 — quá yếu để đứng một mình nhưng \textit{bổ sung} hiệu quả: ma trận nhầm lẫn (Hình 6) cho thấy FRF-MLP tăng recall OFFENSIVE từ 40,3\% lên 45,3\% và HATE từ 54,4\% lên 57,4\% so với MLP thuần, đồng thời giảm 26 trường hợp OFFENSIVE bị nhầm sang HATE (100 $\rightarrow$ 74) — đúng vùng mà biến nhắm đích $T$ được thiết kế để phân giải. Điều này khẳng định giả thuyết trung tâm: tri thức ngôn ngữ mờ và thống kê TF-IDF mang thông tin bổ trợ, không trùng lặp.
 
 \begin{table}[!htb]
 \tabcap{5}{Kết quả ablation trên tập kiểm tra ViHSD (\%). $\Delta$ tính theo macro-F1 so với MLP thuần.}
@@ -356,10 +356,10 @@ Bảng 5 tách đóng góp của từng mức kết hợp. Riêng mức quyết 
 \toprule
 Cấu hình & Accuracy & Macro-F1 & $\Delta$\\
 \midrule
-MLP thuần (gốc ablation) & 83,80 & 61,03 & ---\\
-MLP + kết hợp quyết định ($\lambda^{*}=0{,}20$) & 83,70 & 61,64 & +0,61\\
-MLP + đặc trưng mờ & 84,69 & 62,82 & +1,79\\
-FRF-MLP đầy đủ ($\lambda^{*}=0{,}25$) & 84,46 & 62,95 & +1,92\\
+MLP thuần (gốc ablation) & 83,82 & 60,95 & ---\\
+MLP + kết hợp quyết định ($\lambda^{*}=0{,}45$) & 82,62 & 60,97 & +0,02\\
+MLP + đặc trưng mờ & 84,54 & 62,87 & +1,92\\
+FRF-MLP đầy đủ ($\lambda^{*}=0{,}25$) & 84,33 & 63,00 & +2,05\\
 \bottomrule
 \end{tabular}}
 \end{table}
@@ -373,7 +373,7 @@ FRF-MLP đầy đủ ($\lambda^{*}=0{,}25$) & 84,46 & 62,95 & +1,92\\
 % ============================ 5. KET LUAN ============================
 \secvn{5. Kết luận}
 
-Nghiên cứu đã đề xuất FRF-MLP — mô hình kết hợp MLP với hệ luật mờ Mamdani ở hai mức đặc trưng và quyết định — cho bài toán phát hiện ngôn từ công kích trên văn bản mạng xã hội tiếng Việt. Toàn bộ thành phần mờ (từ điển log-odds, biến ngôn ngữ, luật) được xây dựng tự động từ dữ liệu huấn luyện, không cần từ điển thủ công. Trên ViHSD, phương pháp đạt 84,46\% accuracy và 62,95\% macro-F1, cải thiện +1,92 điểm macro-F1 so với MLP thuần và vượt các baseline đã công bố (Text-CNN, GRU, họ BERT đa ngữ) về macro-F1 với chi phí huấn luyện chỉ vài phút CPU.
+Nghiên cứu đã đề xuất FRF-MLP — mô hình kết hợp MLP với hệ luật mờ Mamdani ở hai mức đặc trưng và quyết định — cho bài toán phát hiện ngôn từ công kích trên văn bản mạng xã hội tiếng Việt. Toàn bộ thành phần mờ (từ điển log-odds, biến ngôn ngữ, luật) được xây dựng tự động từ dữ liệu huấn luyện, không cần từ điển thủ công. Trên ViHSD, phương pháp đạt 84,33\% accuracy và 63,00\% macro-F1, cải thiện +2,05 điểm macro-F1 so với MLP thuần và vượt các baseline đã công bố (Text-CNN, GRU, họ BERT đa ngữ) về macro-F1 với chi phí huấn luyện chỉ vài phút CPU.
 
 Ưu điểm của phương pháp là nhẹ, diễn giải được ở mức luật, và cải thiện nhất quán các lớp thiểu số. Hạn chế: hệ mờ đứng một mình còn yếu; hồi quy softmax có trọng số lớp vẫn nhỉnh hơn về macro-F1, cho thấy kiến trúc MLP trên TF-IDF thưa chưa phải bộ học tối ưu; biên hàm thành viên đang cố định thủ công. Hướng phát triển: (i) học biên hàm thành viên và trọng số luật đầu-cuối theo tinh thần ANFIS [9]; (ii) thay TF-IDF bằng embedding PhoBERT [6] làm đầu vào cho FRF-MLP; (iii) áp cơ chế kết hợp mờ hai mức lên các bộ phân loại khác và các bộ dữ liệu tiếng Việt khác như VLSP-HSD [3].
 

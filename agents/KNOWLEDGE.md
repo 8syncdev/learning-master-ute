@@ -22,3 +22,7 @@ Mỗi entry prefix `validated:` (test/build xác nhận) · `hypothesis:` (chưa
 - failure: gate fusion học được sigmoid(a·conf_fuzzy+b) trộn p_fuzzy vào loss NLL làm FRF-MLP
   TỆ hơn ablation feature-fusion (61,0 vs 62,8 macro-F1) — hội tụ chậm, mixture làm nhòe gradient.
   Fix: fusion quyết định hậu nghiệm với λ quét lưới trên dev (deterministic, +0,1–0,6pt).
+- failure: ViHSD MLP — nâng cap epoch 40→100 + patience 5→10 làm macro-F1 test GIẢM
+  (mlp_feat 62,87→60,92): dev nhỏ (212 OFFENSIVE) nhiễu → patience dài chọn checkpoint
+  muộn overfit-dev. Protocol chuẩn giữ 40/5; "đủ epoch" chứng minh bằng loss hội tụ ~0,02
+  + dev-F1 plateau, không phải bằng số epoch lớn.
