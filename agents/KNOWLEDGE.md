@@ -13,4 +13,12 @@
 
 Mỗi entry prefix `validated:` (test/build xác nhận) · `hypothesis:` (chưa) · `failure:` (lỗi đã gặp + cách sửa; đọc đầu phiên để khỏi lặp).
 
-_empty_
+- validated: tectonic 0.15 (binary release) + fontspec dùng font bundle theo TÊN FILE
+  (`\setmainfont{texgyretermes}[Extension=.otf, UprightFont=*-regular,...]`) render tiếng Việt
+  hoàn chỉnh không cần cài font hệ thống — `\setmainfont{TeX Gyre Termes}` (tên fontconfig) FAIL.
+- validated: trên ViHSD TF-IDF thưa 40k chiều, hồi quy softmax class-weighted (C tune dev) đạt
+  64,50 macro-F1 > mọi MLP variant (~61–63) kể cả wide&deep và ensemble 5 seed — mô hình tuyến
+  tính lồi là baseline rất mạnh trên sparse TF-IDF; MLP overfit nhanh (early stop ~ep6–16).
+- failure: gate fusion học được sigmoid(a·conf_fuzzy+b) trộn p_fuzzy vào loss NLL làm FRF-MLP
+  TỆ hơn ablation feature-fusion (61,0 vs 62,8 macro-F1) — hội tụ chậm, mixture làm nhòe gradient.
+  Fix: fusion quyết định hậu nghiệm với λ quét lưới trên dev (deterministic, +0,1–0,6pt).

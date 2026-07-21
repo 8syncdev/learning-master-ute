@@ -27,3 +27,6 @@ Thumbs.db
 
 # Redundant submission archive (duplicate of the unpacked EDA folder)
 *.zip
+
+# LaTeX build artifacts (PDF bằng chứng đã copy vào folder nộp bài)
+ml_ad/final/report/build/
