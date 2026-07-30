@@ -7,7 +7,7 @@ viên LOW/MED/HIGH** của 3 biến ngôn ngữ, **7 luật Mamdani** (luật n�
 **token công kích** được tô sáng theo z-score log-odds.
 
 ```
-┌─ Vite + React + TS (web/, :5173) ───────────┐
+┌─ Vite + React + TS (web/, :3000) ────────────┐
 │   composer + verdict + giải thích trực quan │
 └──────────────────┬──────────────────────────┘
                    │ JSON over /api (vite proxy)
@@ -18,7 +18,6 @@ viên LOW/MED/HIGH** của 3 biến ngôn ngữ, **7 luật Mamdani** (luật n�
 ```
 
 ## Chạy demo
-
 ```bash
 # 0. (một lần) tạo venv + cài deps nếu chưa có
 cd ml_ad/final
@@ -38,7 +37,7 @@ cd demo/web && bun install   # hoặc: npm install
 cd demo/api && ../../.venv/bin/python -m uvicorn main:app --port 8000 --reload   # backend
 cd demo/web && bun run dev                                                        # frontend
 
-# mở http://localhost:5173
+# mở http://localhost:3000
 ```
 
 Hoặc dùng script tiện lợi từ `ml_ad/final/`:
