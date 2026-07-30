@@ -87,7 +87,8 @@ def build_features(parts):
     np.savez(OUT / "fuzzy_stats.npz",
              crisp_train=crisp["train"], crisp_test=crisp["test"],
              y_train=tr_y, y_test=parts["test"][1])
-    return X, F, pf
+    fit = dict(w_vec=w_vec, c_vec=c_vec, lex=lex, ext=ext)
+    return X, F, pf, fit
 
 
 # ---------------------------------------------------------------------------
@@ -194,7 +195,7 @@ def report(name, y_true, y_pred, results, confs):
 
 def main():
     parts = load_data()
-    X, F, pf = build_features(parts)
+    X, F, pf, _fit = build_features(parts)
     te_y = parts["test"][1]
     dv_y = parts["dev"][1]
     results, confs, curves = {}, {}, {}

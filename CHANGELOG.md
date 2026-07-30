@@ -19,3 +19,12 @@ Mọi thay đổi đáng kể ghi vào đây — format [Keep a Changelog](https
   (mlp_feat 62,87→60,92 macro-F1) — checkpoint muộn chọn theo dev nhiễu không generalize;
   giữ protocol 40/5 (loss đã hội tụ ~0,02), có bằng chứng bão hòa cho phần bảo vệ.
 
+### Added (2026-07-31 — Demo web FRF-MLP)
+- `ml_ad/final/demo/`: app web minh hoạ model đã train — **Vite + React + TS** (frontend)
+  + **FastAPI** (backend) load artifact (`mlp_feat.pt` + `artifacts.pkl`) để dự đoán real-time.
+  UI dark theme chuẩn "kiểm duyệt MXH": composer dạng bình luận, verdict badge 3 màu
+  (AN TOÀN/CÔNG KÍCH/THÙ GHÉT), prob bars, fusion strip `(1−λ)p_MLP + λ·p_mờ`, 3 biến mờ
+  với hàm thành viên LOW/MED/HIGH, 7 luật Mamdani (luật kích hoạt nổi bật), token công
+  kích tô sáng theo z-score. Có `/sample` lấy mẫu thật từ ViHSD. Verify qua browser cả 2
+  nhánh HATE/CLEAN. `save_artifacts.py` dựng lại model (≈1 phút), `run.sh` khởi động cả 2.
+

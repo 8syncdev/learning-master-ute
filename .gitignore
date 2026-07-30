@@ -30,3 +30,9 @@ Thumbs.db
 
 # LaTeX build artifacts (PDF bằng chứng đã copy vào folder nộp bài)
 ml_ad/final/report/build/
+
+# Demo artifacts (regenerable via save_artifacts.py)
+ml_ad/final/demo/api/*.pt
+ml_ad/final/demo/api/*.pkl
+ml_ad/final/demo/web/node_modules/
+ml_ad/final/demo/web/dist/
