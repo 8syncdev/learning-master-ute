@@ -3,7 +3,7 @@ import {
   ShieldCheck, AlertTriangle, Skull, Sparkles, Shuffle, Gauge,
   Network, Scissors, BookOpen, Cpu, Layers, FlaskConical, Lightbulb,
 } from "lucide-react";
-import { type Label, type Prediction, predict, sample } from "./api";
+import { type Label, type Prediction, type CompareResponse, predict, compare, sample } from "./api";
 import Walkthrough from "./Walkthrough";
 import { PaperIdeal, WhyFRF, FutureWork } from "./Essays";
 
@@ -24,6 +24,7 @@ const EXAMPLES = [
 export default function App() {
   const [text, setText] = useState("");
   const [pred, setPred] = useState<Prediction | null>(null);
+  const [cmp, setCmp] = useState<CompareResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [tab, setTab] = useState<0 | 1 | 2>(0);
   const [err, setErr] = useState("");
@@ -34,6 +35,7 @@ export default function App() {
     try { setPred(await predict(t)); }
     catch (e) { setErr("Không kết nối được tới API. Đảm bảo backend đang chạy ở :8000."); }
     finally { setLoading(false); }
+    compare(t).then(setCmp).catch(() => setCmp(null));
   }, []);
 
   useEffect(() => { run(EXAMPLES[2]); setText(EXAMPLES[2]); }, [run]);
@@ -83,7 +85,7 @@ export default function App() {
         <button className={tab === 1 ? "tab on" : "tab"} onClick={() => setTab(1)}><FlaskConical size={14} /> Giải trình từng bước</button>
         <button className={tab === 2 ? "tab on" : "tab"} onClick={() => setTab(2)}><Lightbulb size={14} /> Ý tưởng paper &amp; cải tiến</button>
       </nav>
-      {tab === 1 && <div className="tab-pane"><Walkthrough pred={pred} /></div>}
+      {tab === 1 && <div className="tab-pane"><Walkthrough pred={pred} cmp={cmp} /></div>}
       {tab === 2 && <div className="tab-pane"><PaperIdeal /><WhyFRF /><FutureWork /></div>}
 
       {tab === 0 && (

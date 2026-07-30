@@ -26,3 +26,13 @@ Mỗi entry prefix `validated:` (test/build xác nhận) · `hypothesis:` (chưa
   (mlp_feat 62,87→60,92): dev nhỏ (212 OFFENSIVE) nhiễu → patience dài chọn checkpoint
   muộn overfit-dev. Protocol chuẩn giữ 40/5; "đủ epoch" chứng minh bằng loss hội tụ ~0,02
   + dev-F1 plateau, không phải bằng số epoch lớn.
+- validated: cấu hình máy đào tạo (đo nvidia-smi/lscpu/free 2026-07-31, không ước lượng):
+  • CPU AMD Ryzen 9 9950X3D — 16 core / 32 thread, boost ≤5756 MHz, L3 128 MiB (3D V-Cache, 2 CCD).
+  • RAM 60,5 GiB. Ổ ADATA LEGEND 860 NVMe 1,8 TB. OS CachyOS Linux, kernel 7.1.3-2-cachyos, gcc 16.1.1.
+  • GPU NVIDIA GeForce RTX 5080 (Blackwell GB203) — 16 GB GDDR7, driver 610.43.03, compute cap 12.0,
+    boost ≤3165 MHz core / 15001 MHz mem, TDP 400 W (max 450 W). (lõi: 10752 CUDA + 336 Tensor gen-5 — spec NXB.)
+  • PyTorch cài BẢN CPU-ONLY (`2.13.0+cpu`, `torch.cuda.is_available()==False`) → huấn luyện FRF-MLP
+    THỰC TẾ chạy trên CPU Ryzen, KHÔNG dùng GPU. Paper dòng 262 ghi đúng "CPU AMD Ryzen 9 9950X3D".
+  → Đây LÀ điểm mạnh cho thesis "nhẹ / không cần GPU / deploy CPU": mô hình 10,3M tham số trên TF-IDF
+    thưa huấn luyện <2 phút/mô hình trên CPU của chính máy có 5080. Muốn "train trên 5080" phải cài
+    torch+CUDA rồi retrain (model nhỏ → GPU gần như không tăng tốc, TF-IDF vẫn CPU-bound).

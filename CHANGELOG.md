@@ -28,3 +28,17 @@ Mọi thay đổi đáng kể ghi vào đây — format [Keep a Changelog](https
   kích tô sáng theo z-score. Có `/sample` lấy mẫu thật từ ViHSD. Verify qua browser cả 2
   nhánh HATE/CLEAN. `save_artifacts.py` dựng lại model (≈1 phút), `run.sh` khởi động cả 2.
 
+
+### Changed (2026-07-31 — Demo: công cụ bắt-giải sâu + cấu hình máy)
+- **Giải trình từng bước v2** (`Walkthrough.tsx`): bỏ accordion → mở hết 8 bước, TOC dính +
+  scrollspy + smooth scroll. 2 chế độ chạy: **▶ Tự chạy** (auto-play qua 8 bước) và **Chạy từng
+  bước** (bấm mới mở, có khoá). Mỗi bước thêm mục **"Bung số"** — công thức thay biến bằng giá trị
+  thật của câu đang phân tích (μ trapezoid, min t-norm, giải mờ, softmax, fusion λ). Giáo sư bắt
+  giải từng con số trên chính bình luận đó.
+- **So sánh trực tiếp 3 mô hình**: endpoint `/compare` chạy cùng câu qua softmax (LogisticRegression
+  C=4) · fuzzy-only · FRF-MLP, trả xác suất + nhãn + phân tích khác biệt. Bước phụ trong walkthrough
+  + 4-lý-do chọn FRF-MLP (diễn giải/nhẹ CPU/nâng lớp thiểu số/tri thức tường minh) trong tab Ý tưởng.
+  `save_softmax.py` lưu riêng softmax artifact (~12 giây, không retrain MLP).
+- **Cấu hình máy chính xác** (paper §4.2): đo nvidia-smi/lscpu — Ryzen 9 9950X3D + RTX 5080 16GB
+  + 60GB RAM + NVMe 1.8TB; làm rõ train chạy CPU (torch CPU-only build) — củng cố thesis nhẹ/không
+  cần GPU. Ghi verified vào KNOWLEDGE.md.

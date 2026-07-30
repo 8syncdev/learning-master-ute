@@ -53,6 +53,13 @@ W_VEC, C_VEC, LEX = A["w_vec"], A["c_vec"], A["lex"]
 EXT, LAM = A["ext"], float(A["lambda_frf"])
 Z_THRESH = 2.0
 
+# softmax baseline (LogisticRegression C=4 class-weighted) cho endpoint /compare
+SOFTMAX = None
+_sx = HERE / "softmax.pkl"
+if _sx.exists():
+    with open(_sx, "rb") as _f:
+        SOFTMAX = pickle.load(_f)
+
 # sample comments (bo nhãn HATE/OFFENSIVE phan trang)
 import csv
 SAMPLES = []
@@ -95,6 +102,10 @@ def _top_features(vec_row, names, k):
 MU_LABEL = ["S=LOW", "S=MED", "S=HIGH", "D=LOW", "D=MED", "D=HIGH", "T=LOW", "T=MED", "T=HIGH"]
 # antecedent cho moi luat (danh sach mu-index)
 RULE_ANTE = {0: [0, 3], 1: [1, 6], 2: [2, 6], 3: [1, 8], 4: [2, 7, 8], 5: [5, 8], 6: [4, 6]}
+# bien hàm thành viên hình thang [a,b,c,d] cho LOW/MED/HIGH (theo fuzzy.memberships)
+MU_BREAK = {"LOW": [-1.0, 0.0, 0.15, 0.40], "MED": [0.20, 0.45, 0.55, 0.80],
+            "HIGH": [0.60, 0.85, 1.00, 2.00]}
+VAR_NAME = ["S", "D", "T"]
 
 
 @app.post("/predict")
@@ -172,8 +183,16 @@ def predict(inp: PredIn):
                      "bounds_hi": [round(float(v), 3) for v in EXT.hi],
                      "crisp_norm": [round(float(v), 3) for v in crisp]}},
         {"n": 4, "title": "Mờ hóa (hàm thành viên)", "subtitle": "trapezoid LOW/MED/HIGH cho S, D, T",
-         "content": {"mu": [{"label": MU_LABEL[j], "value": round(float(mu[j]), 3)}
-                            for j in range(9)]}},
+         "content": {
+             "mu": [{"label": MU_LABEL[j], "value": round(float(mu[j]), 3)} for j in range(9)],
+             "mu_detail": [
+                 {"label": MU_LABEL[j], "var": VAR_NAME[j // 3], "level": lvl,
+                  "v": round(float(crisp[j // 3]), 3),
+                  "a": MU_BREAK[lvl][0], "b": MU_BREAK[lvl][1],
+                  "c": MU_BREAK[lvl][2], "d": MU_BREAK[lvl][3],
+                  "mu": round(float(mu[j]), 3)}
+                 for j in range(9) for lvl in [MU_LABEL[j].split("=")[1]]
+             ]}},
         {"n": 5, "title": "Suy diễn 7 luật Mamdani", "subtitle": "t-norm min trên mỗi antecedent",
          "content": {"rules": [{"name": RULES[k][0],
                                 "antecedents": [{"label": MU_LABEL[i], "value": round(float(mu[i]), 3)}
@@ -211,3 +230,67 @@ def predict(inp: PredIn):
         "n_tokens": len(toks),
         "steps": steps,
     }
+
+
+@app.post("/compare")
+def compare(inp: PredIn):
+    """Chạy cùng 1 câu qua 3 mô hình để giáo sư bắt bẻ 'tại sao không dùng cái kia'.
+    Trả về softmax (tuyến tính), fuzzy-only (tri thức mờ), FRF-MLP (lai) + phân tích khác biệt.
+    """
+    import torch.nn.functional as Ff
+    from fuzzy import fuzzy_features
+    norm = normalize(inp.text or "")
+    xw = W_VEC.transform([norm]); xc = C_VEC.transform([norm])
+    X = sp.hstack([xw, xc]).tocsr()
+    crisp = EXT.transform([inp.text])[0]
+    _, _, p_fuzzy = fuzzy_inference(crisp[None, :])
+    p_fuzzy = p_fuzzy[0]
+    F = fuzzy_features(crisp[None, :])
+    with torch.no_grad():
+        xt = torch.from_numpy(X.toarray().astype(np.float32))
+        xf = torch.from_numpy(F)
+        p_mlp = Ff.softmax(model(xt, xf), 1)[0].numpy()
+    p_frf = (1 - LAM) * p_mlp + LAM * p_fuzzy
+
+    p_sx = SOFTMAX.predict_proba(X.toarray())[0] if SOFTMAX is not None else None
+
+    def row(name, p, note):
+        if p is None:
+            return {"model": name, "available": False}
+        i = int(np.argmax(p))
+        return {"model": name, "label": LABELS[i], "label_vn": LABEL_VN[LABELS[i]],
+                "probs": {LABELS[k]: round(float(p[k]), 4) for k in range(3)},
+                "note": note}
+
+    models = [
+        row("softmax", p_sx,
+            "Hồi quy softmax (LogisticRegression C=4, class-weighted) — tuyến tính, lồi, "
+            "hộp đen: không giải thích được tại sao chọn nhãn này."),
+        row("fuzzy", p_fuzzy,
+            "Hệ mờ thuần (7 luật Mamdani) — diễn giải đầy đủ nhưng standalone yếu (macro-F1 41,6%), "
+            "thiếu độ phủ teencode."),
+        row("frf", p_frf,
+            f"FRF-MLP: (1−{LAM:.2f})·p_MLP + {LAM:.2f}·p_mờ — lai 2 kênh (thống kê + tri thức mờ)."),
+    ]
+
+    # phân tích khác biệt giữa các mô hình (giáo sư bắt bẻ 'tại sao không dùng cái kia')
+    labs = {m["model"]: m.get("label") for m in models if m.get("available", True)}
+    agreed = len(set(labs.values())) <= 1
+    diffs = []
+    if agreed:
+        diffs.append(f"Cả {len(labs)} mô hình đồng ý nhãn "
+                     f"{next(iter(labs.values()))} — trường hợp dễ, ít gây tranh cãi.")
+    else:
+        frf_lab = labs.get("frf")
+        for mk in ("softmax", "fuzzy"):
+            if mk in labs and labs[mk] != frf_lab:
+                reason = ("kênh mờ Mamdani hiệu chỉnh MLP ở biên CLEAN/OFFENSIVE nhờ biến T "
+                          "(độ nhắm đích) — softmax tuyến tính không có tri thức này."
+                          if mk == "softmax" else
+                          "MLP thống kê đè lên kênh mờ (λ nhỏ) vì hệ mờ standalone nhiễu.")
+                diffs.append(f"{mk.capitalize()} dự đoán {labs[mk]} nhưng FRF-MLP dự đoán "
+                             f"{frf_lab}: {reason}")
+        if not diffs:
+            diffs.append("Các mô hình khác độ tin nhưng cùng nhãn FRF-MLP.")
+    return {"models": models, "agreed": agreed, "analysis": diffs,
+            "has_softmax": SOFTMAX is not None}
