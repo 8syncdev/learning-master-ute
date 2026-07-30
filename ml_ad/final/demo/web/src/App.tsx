@@ -47,7 +47,7 @@ export default function App() {
         <div>
           <h1>FRF-MLP · Bộ lọc ngôn từ công kích tiếng Việt</h1>
           <div className="sub">
-            MLP kết hợp fuzzy logic Mamdani · phát hiện CLEAN / OFFENSIVE / HATE trên bình luận mạng xã hội
+            Perceptron đa lớp kết hợp fuzzy logic Mamdani · phát hiện CLEAN / OFFENSIVE / HATE trên bình luận mạng xã hội
           </div>
         </div>
         <div className="badges">
@@ -55,6 +55,25 @@ export default function App() {
           <span className="badge">ViHSD · 3 lớp</span>
         </div>
       </header>
+
+      <section className="hero">
+        <p className="hero-lede">
+          Mô hình FRF-MLP chỉ <strong>10,3 triệu tham số</strong> với trọng số <strong>42 MB</strong>,
+          suy diễn <strong>~3 mili-giây / bình luận trên CPU</strong> thông thường —
+          đủ nhanh để kiểm duyệt <strong>thời gian thực</strong> trong đường ống mạng xã hội,
+          chạy trên server giá rẻ hoặc ngay tại biên (edge), <strong>không cần GPU hay mô hình tiền huấn luyện</strong>.
+          Để so sánh, m-BERT đa ngữ — baseline tốt nhất trên ViHSD — cần <em>178 triệu tham số</em>,
+          <em>~700 MB</em> và thường yêu cầu GPU; FRF-MLP nhẹ hơn khoảng <strong>17×</strong> về tham số
+          mà vẫn vượt m-BERT về macro-F1 (63,00% so với 62,69%), nhờ tận dụng tri thức ngôn ngữ mờ.
+        </p>
+        <div className="hero-stats">
+          <div className="stat"><span className="stat-n">10,3M</span><span className="stat-l">tham số</span></div>
+          <div className="stat"><span className="stat-n">42 MB</span><span className="stat-l">trọng số + vectorizer</span></div>
+          <div className="stat"><span className="stat-n">~3 ms</span><span className="stat-l">suy diễn / bình luận (CPU)</span></div>
+          <div className="stat"><span className="stat-n">0</span><span className="stat-l">GPU / tiền huấn luyện</span></div>
+          <div className="stat vs"><span className="stat-n">17×</span><span className="stat-l">nhẹ hơn m-BERT</span></div>
+        </div>
+      </section>
 
       <div className="grid">
         {/* LEFT: composer + verdict */}

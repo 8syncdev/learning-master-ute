@@ -67,6 +67,42 @@ body {
   box-shadow: 0 0 8px var(--clean);
 }
 
+/* ---------- hero intro (professor-facing) ---------- */
+.hero {
+  padding: 18px 22px 20px;
+  margin-bottom: 24px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background:
+    radial-gradient(680px 220px at 8% -40%, rgba(76, 141, 255, 0.08), transparent 70%),
+    var(--bg-elev);
+  border-radius: 12px;
+}
+.hero-lede {
+  font-size: 14.5px;
+  line-height: 1.62;
+  color: var(--text-dim);
+  max-width: 78ch;
+}
+.hero-lede strong { color: var(--text); font-weight: 650; }
+.hero-lede em { font-style: normal; color: var(--text); }
+.hero-stats {
+  display: flex; flex-wrap: wrap; gap: 0;
+  margin-top: 14px;
+}
+.hero-stats .stat {
+  display: flex; flex-direction: column; gap: 2px;
+  padding: 4px 20px;
+  border-left: 1px solid var(--border);
+}
+.hero-stats .stat:first-child { padding-left: 0; border-left: none; }
+.stat-n {
+  font-family: var(--mono); font-size: 17px; font-weight: 700;
+  color: var(--text); letter-spacing: -0.01em;
+}
+.stat-l { font-size: 11px; color: var(--text-faint); letter-spacing: 0.02em; }
+.hero-stats .stat.vs .stat-n { color: var(--clean); }
+
 /* ---------- grid ---------- */
 .grid {
   display: grid;
