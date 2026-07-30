@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
 import {
   ShieldCheck, AlertTriangle, Skull, Sparkles, Shuffle, Gauge,
-  Network, Scissors, BookOpen, Cpu, Layers,
+  Network, Scissors, BookOpen, Cpu, Layers, FlaskConical, Lightbulb,
 } from "lucide-react";
 import { type Label, type Prediction, predict, sample } from "./api";
+import Walkthrough from "./Walkthrough";
+import { PaperIdeal, WhyFRF, FutureWork } from "./Essays";
 
 const LABEL_META: Record<Label, { vn: string; color: string; Icon: typeof ShieldCheck }> = {
   CLEAN: { vn: "An toàn", color: "#22a06b", Icon: ShieldCheck },
@@ -23,6 +25,7 @@ export default function App() {
   const [text, setText] = useState("");
   const [pred, setPred] = useState<Prediction | null>(null);
   const [loading, setLoading] = useState(false);
+  const [tab, setTab] = useState<0 | 1 | 2>(0);
   const [err, setErr] = useState("");
 
   const run = useCallback(async (t: string) => {
@@ -75,6 +78,15 @@ export default function App() {
         </div>
       </section>
 
+      <nav className="tabs">
+        <button className={tab === 0 ? "tab on" : "tab"} onClick={() => setTab(0)}><Cpu size={14} /> Bảng điều khiển</button>
+        <button className={tab === 1 ? "tab on" : "tab"} onClick={() => setTab(1)}><FlaskConical size={14} /> Giải trình từng bước</button>
+        <button className={tab === 2 ? "tab on" : "tab"} onClick={() => setTab(2)}><Lightbulb size={14} /> Ý tưởng paper &amp; cải tiến</button>
+      </nav>
+      {tab === 1 && <div className="tab-pane"><Walkthrough pred={pred} /></div>}
+      {tab === 2 && <div className="tab-pane"><PaperIdeal /><WhyFRF /><FutureWork /></div>}
+
+      {tab === 0 && (
       <div className="grid">
         {/* LEFT: composer + verdict */}
         <div className="card">
@@ -138,6 +150,7 @@ export default function App() {
           </div>
         </div>
       </div>
+      )}
 
       <footer className="footer">
         <span><BookOpen size={12} style={{ verticalAlign: "-2px", marginRight: 4 }} />FRF-MLP · đồ án Học máy nâng cao</span>
