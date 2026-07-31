@@ -36,6 +36,10 @@ if [ ! -f demo/api/mlp_feat.pt ] || [ ! -f demo/api/artifacts.pkl ]; then
   echo ">> [2/4] Dựng model artifact (retrain mlp_feat ~1 phút CPU)..."
   "$PY" save_artifacts.py
 fi
+if [ ! -f demo/api/softmax.pkl ]; then
+  echo ">>      Dựng softmax artifact (cho /compare, ~15 giây)..."
+  "$PY" save_softmax.py
+fi
 
 # ---- 3. Frontend deps ------------------------------------------------------
 JR="$(JS_RUN)"

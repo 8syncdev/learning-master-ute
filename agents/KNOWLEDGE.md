@@ -35,4 +35,7 @@ Mỗi entry prefix `validated:` (test/build xác nhận) · `hypothesis:` (chưa
     THỰC TẾ chạy trên CPU Ryzen, KHÔNG dùng GPU. Paper dòng 262 ghi đúng "CPU AMD Ryzen 9 9950X3D".
   → Đây LÀ điểm mạnh cho thesis "nhẹ / không cần GPU / deploy CPU": mô hình 10,3M tham số trên TF-IDF
     thưa huấn luyện <2 phút/mô hình trên CPU của chính máy có 5080. Muốn "train trên 5080" phải cài
-    torch+CUDA rồi retrain (model nhỏ → GPU gần như không tăng tốc, TF-IDF vẫn CPU-bound).
+- validated: kết quả CHÍNH THỨC báo cáo = lần chạy chuẩn CPU seed 42 đã commit trong outputs/
+  (frf_mlp 84,33/63,00, +2,05 vs MLP, vượt m-BERT 62,69 về macro-F1). Quyết định: GIỮ CPU, không ghi GPU.
+  Lý do dùng kết quả này: macro-F1 KHÔNG tái lập hoàn toàn giữa các lần chạy (±1–2đ do nondeterminism
+  đa luồng) nên số chính thức = lần chạy chuẩn đã commit; re-run chỉ minh hoạ quy trình (notebook có ghi rõ).

@@ -42,3 +42,13 @@ Mọi thay đổi đáng kể ghi vào đây — format [Keep a Changelog](https
 - **Cấu hình máy chính xác** (paper §4.2): đo nvidia-smi/lscpu — Ryzen 9 9950X3D + RTX 5080 16GB
   + 60GB RAM + NVMe 1.8TB; làm rõ train chạy CPU (torch CPU-only build) — củng cố thesis nhẹ/không
   cần GPU. Ghi verified vào KNOWLEDGE.md.
+
+### Added (2026-08-01 — Notebook FRF-MLP-ViHSD.ipynb)
+- `ml_ad/final/FRF-MLP-ViHSD.ipynb`: notebook Jupyter **48 cell tiếng Việt, đã thực thi** (output thật +
+  5 figure nhúng) đi kèm paper. Cấu trúc bám paper: Giới thiệu → Công trình liên quan → Phương pháp 4 bước
+  (EDA ViHSD, tiền xử lý, TF-IDF 2 mức, lexicon log-odds, biến S/D/T, hàm thành viên + 7 luật Mamdani,
+  kiến trúc MLP) → Thực nghiệm (softmax/MLP/FRF-MLP train trực tiếp, quét λ, bảng so sánh + ablation,
+  ma trận nhầm lẫn, đường học) → suy diễn 1 câu (truy vết) → kết luận/hạn chế/hướng phát triển → refs.
+  Kết quả đọc từ `outputs/metrics.json` (lần chạy chuẩn CPU seed 42: frf_mlp 84,33/63,00, +2,05, vượt
+  m-BERT). Cell huấn luyện chạy trực tiếp pipeline (minh hoạ); note trung thực về biến thiên run-to-run.
+- `ml_ad/final/build_notebook.py`: script dựng notebook (nbformat) — chạy lại khi sửa nội dung cell.
