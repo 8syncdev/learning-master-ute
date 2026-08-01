@@ -22,7 +22,10 @@ md(r"""# FRF-MLP — Kết hợp Perceptron đa lớp với logic mờ trong ph�
 
 **Đồ án cuối kỳ · Học máy nâng cao**
 
-- Tác giả: Nguyễn Phương Anh Tú (2611328) — ĐH Công nghệ Kỹ thuật TP.HCM
+- **Nhóm tác giả** — ĐH Công nghệ Kỹ thuật TP.HCM:
+  - **Trưởng nhóm:** Nguyễn Phương Anh Tú (2611328)
+  - Thành viên: Đinh Hữu Quang Anh (2611301)
+  - Thành viên: Phạm Hiền Nhân (2611316)
 - Bộ dữ liệu: **ViHSD** (33.398 bình luận mạng xã hội tiếng Việt, gán nhãn CLEAN / OFFENSIVE / HATE)
 - Mô hình đề xuất: **FRF-MLP** (Fuzzy Rule-Fused MLP) — MLP kết hợp hệ luật mờ Mamdani ở 2 mức (đặc trưng + quyết định)
 
