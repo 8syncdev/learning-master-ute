@@ -27,8 +27,7 @@ Nhom_8-Tu_Nhan_Anh/
 ├── data/                      Bộ dữ liệu ViHSD (33.398 mẫu, train/dev/test)
 ├── outputs/                   ★ KẾT QUẢ: metrics.json, curves.json, confusions.npz + 6 figures
 ├── report/                    ★ BÀI BÁO: paper.tex (định dạng JTE) + paper.pdf
-├── demo/                      ★ WEB DEMO: FastAPI (api/) + React-TypeScript (web/) + run.sh
-└── 2611328-...-JTE.pdf        Bản PDF bài báo nộp
+└── demo/                      ★ WEB DEMO: FastAPI (api/) + React-TypeScript (web/) + run.sh
 ```
 
 ## Kết quả thực nghiệm (ViHSD, tập test)
