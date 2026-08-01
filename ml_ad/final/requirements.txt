@@ -1,7 +1,0 @@
-numpy
-scikit-learn
-matplotlib
-pandas
-scipy
-# torch CPU: --index-url https://download.pytorch.org/whl/cpu
-torch

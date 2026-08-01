@@ -7,7 +7,7 @@
 - [x] Full train trên ViHSD split gốc: baselines (softmax, fuzzy, MLP) + 2 ablation + FRF-MLP đề xuất
 - [x] Kết quả: FRF-MLP 84,46% acc / 62,95% macro-F1 (+1,92 vs MLP; > baseline công bố về macro-F1)
 - [x] Báo cáo 10 trang tiếng Việt đúng JTE-Template-Vie-01.2026, 12 refs IEEE verified, build tectonic
-- [x] PDF verify trực quan từng trang; giao `ml_ad/final/2611328 - .../` + `~/Downloads/`
+- [x] PDF verify trực quan từng trang; giao `ml_ad/Nhom_8-Tu_Nhan_Anh/2611328 - .../` + `~/Downloads/`
 
 ## Checklist
 - [x] fuzzy.py · train.py · figures.py · report/paper.tex · outputs/{metrics,curves,confusions,figures}
@@ -27,4 +27,4 @@ Nếu nộp nhóm: bổ sung tên 2 thành viên (Quang Anh, Phạm Hiền Nhân
 _none_
 
 ## Handoff (compaction)
-Kết quả + lệnh tái lập: `cd ml_ad/final && .venv/bin/python train.py && .venv/bin/python figures.py`; build PDF: `~/.local/bin/tectonic -X compile report/paper.tex --outdir report/build`.
+Kết quả + lệnh tái lập: `cd ml_ad/Nhom_8-Tu_Nhan_Anh && .venv/bin/python train.py && .venv/bin/python figures.py`; build PDF: `~/.local/bin/tectonic -X compile report/paper.tex --outdir report/build`.

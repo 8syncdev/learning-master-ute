@@ -52,3 +52,16 @@ Mọi thay đổi đáng kể ghi vào đây — format [Keep a Changelog](https
   Kết quả đọc từ `outputs/metrics.json` (lần chạy chuẩn CPU seed 42: frf_mlp 84,33/63,00, +2,05, vượt
   m-BERT). Cell huấn luyện chạy trực tiếp pipeline (minh hoạ); note trung thực về biến thiên run-to-run.
 - `ml_ad/final/build_notebook.py`: script dựng notebook (nbformat) — chạy lại khi sửa nội dung cell.
+
+### Changed (2026-08-01 — Gom toàn bộ đồ án vào thư mục nộp bài của nhóm)
+- `ml_ad/final/` → **`ml_ad/Nhom_8-Tu_Nhan_Anh/`**: thư mục nộp bài giờ **tự chứa toàn bộ công trình**
+  (mã nguồn, `data/`, `outputs/` kết quả + biểu đồ, `report/` LaTeX + PDF, `demo/` web, notebook đã
+  thực thi) — một nguồn duy nhất, không nhân bản.
+- `build_notebook.py`: cell setup tự dò thư mục mã nguồn; kernelspec đổi `frf-mlp` → **`python3`**
+  (mở được trên máy bất kỳ, không cần đăng ký kernel riêng).
+- `requirements.txt`: bổ sung `jupyter`, `nbformat`, `nbconvert`, `ipykernel` — chạy lại notebook
+  không cần cài thêm gì ngoài `run.sh`.
+- `README.md` (thư mục nhóm): 3 tác giả, cấu trúc thư mục, bảng kết quả đầy đủ 9 mô hình, hướng dẫn
+  chạy lại (demo/train/notebook/paper), ghi chú tái lập.
+- Kiểm chứng sau khi chuyển: `run.sh` dựng lại venv từ đầu ở vị trí mới (torch 2.13.0+cpu, 3 artifact),
+  demo trả `HATE` đúng, web 200; notebook execute lại tại chỗ → 48 cell, 5 figure, 0 lỗi, frf_mlp 84,33/63,00.
