@@ -129,8 +129,12 @@ plt.rcParams.update({'font.family': 'DejaVu Sans', 'font.size': 10, 'figure.dpi'
 
 warnings.filterwarnings('ignore')
 
-# import mã nguồn chính của đồ án
-sys.path.insert(0, str(Path('.').resolve()))
+# import mã nguồn chính của đồ án — tự tìm thư mục mã nguồn (chạy được ở cả thư mục nộp bài)
+import os
+PROJ = next(p for p in [Path('.'), Path('../final'), Path('../ml_ad/final')]
+            if (p / 'train.py').exists()).resolve()
+os.chdir(PROJ); sys.path.insert(0, str(PROJ))
+print('Thư mục mã nguồn:', PROJ)
 from fuzzy import (normalize, tokenize, build_lexicon, CrispExtractor,
                    memberships, fuzzy_inference, fuzzy_features, _trap, RULES)
 from train import load_data, build_features, train_torch, FRFMLP, report, SEED, LABELS
@@ -515,6 +519,7 @@ cells = []
 for kind, src in C:
     cells.append(nbf.v4.new_markdown_cell(src) if kind == "md" else nbf.v4.new_code_cell(src))
 nb.cells = cells
-out = Path("FRF-MLP-ViHSD.ipynb")
+out = Path(__file__).resolve().parent.parent / "Nhom_8-Tu_Nhan_Anh" / "FRF-MLP-ViHSD.ipynb"
+out.parent.mkdir(parents=True, exist_ok=True)
 nbf.write(nb, out)
 print(f"✓ đã tạo {out} ({len(cells)} cell)")
