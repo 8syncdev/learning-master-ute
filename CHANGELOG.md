@@ -5,6 +5,10 @@ Mọi thay đổi đáng kể ghi vào đây — format [Keep a Changelog](https
 
 ## [Unreleased]
 
+### Changed (2026-09-22 — Closest Pair beginner-first explanation)
+- Nâng demo web từ 11 lên 15 bước để người chưa học thuật toán vẫn theo được: thêm nền tảng tọa độ/khoảng cách, brute-force, trực giác Divide–Conquer–Combine, lý do sort Px/Py, lý do strip, thứ tự y, giới hạn tối đa 7 lân cận, cây đệ quy giải thích O(n log n), câu tự kiểm tra và lời thoại từng bước.
+- Đồng bộ `demo_closest_pair.cpp` sang bản O(n log n) thực sự: duy trì Px/Py đã sort, partition Py tuyến tính và không sort strip lại ở từng tầng.
+
 ### Added (2026-09-22 — Closest Pair interactive presentation)
 - \`algorithms/divide_and_conquer/closest_pair_points/demo-web/\`: React + Vite step-by-step visualizer cho Closest Pair of Points, tối ưu để trình chiếu 16:9. Có 11 bước từ bài toán, sort Px/Py, Divide, Conquer hai nửa, strip, quét tối đa 7 lân cận, kết quả, T(n), đánh giá/ứng dụng; hỗ trợ auto-play, keyboard, fullscreen, pseudocode highlight và lời thoại gợi ý.
 

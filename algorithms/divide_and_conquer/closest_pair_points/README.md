@@ -52,6 +52,8 @@ marp presentation.marp.md --pptx
 
 ## Demo web React + Vite
 
+> Bản demo hiện được thiết kế theo lộ trình **từ số 0 → trực giác → thuật toán → chứng minh độ phức tạp**, gồm 15 bước. Mỗi bước có phần “Hiểu từ số 0”, “Tại sao?”, câu tự kiểm tra và lời thoại thuyết trình.
+
 Thư mục \`demo-web/\` là bản trình chiếu tương tác từng bước cho riêng thuật toán Closest Pair:
 
 - Điều khiển từng bước hoặc tự chạy.
