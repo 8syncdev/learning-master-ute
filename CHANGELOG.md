@@ -5,6 +5,10 @@ Mọi thay đổi đáng kể ghi vào đây — format [Keep a Changelog](https
 
 ## [Unreleased]
 
+### Added (2026-09-22 — Closest Pair interactive presentation)
+- \`algorithms/divide_and_conquer/closest_pair_points/demo-web/\`: React + Vite step-by-step visualizer cho Closest Pair of Points, tối ưu để trình chiếu 16:9. Có 11 bước từ bài toán, sort Px/Py, Divide, Conquer hai nửa, strip, quét tối đa 7 lân cận, kết quả, T(n), đánh giá/ứng dụng; hỗ trợ auto-play, keyboard, fullscreen, pseudocode highlight và lời thoại gợi ý.
+
+
 ### Added (2026-07-21 — Final project ml_ad: FRF-MLP + báo cáo JTE)
 - `ml_ad/final/`: đồ án cuối kỳ Học máy nâng cao — **FRF-MLP** (MLP kết hợp fuzzy logic Mamdani,
   2 mức fusion đặc trưng + quyết định) phân loại ngôn từ công kích trên ViHSD (3 lớp, split gốc).

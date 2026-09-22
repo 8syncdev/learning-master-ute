@@ -48,3 +48,22 @@ Nếu có Marp CLI:
 marp presentation.marp.md --pdf
 marp presentation.marp.md --pptx
 ```
+
+
+## Demo web React + Vite
+
+Thư mục \`demo-web/\` là bản trình chiếu tương tác từng bước cho riêng thuật toán Closest Pair:
+
+- Điều khiển từng bước hoặc tự chạy.
+- Minh hoạ Divide → Conquer → Combine trực tiếp trên mặt phẳng tọa độ.
+- Highlight dòng mã giả đang chạy.
+- Có lời thoại gợi ý khi thuyết trình.
+- Phím tắt và chế độ toàn màn hình cho máy chiếu.
+
+Chạy:
+
+\`\`\`bash
+cd demo-web
+npm install
+npm run dev
+\`\`\`
