@@ -5,6 +5,10 @@ Mọi thay đổi đáng kể ghi vào đây — format [Keep a Changelog](https
 
 ## [Unreleased]
 
+### Added (2026-09-22 — Bài tập QuickSort + Binary Search 2611328)
+- `algorithms/exercises/2611328_NguyenPhuongAnhTu_Quicksort_BinarySearch/`: bài nộp của Nguyễn Phương Anh Tú (MSSV 2611328), gồm lời giải QuickSort Lomuto từng partition, Binary Search đệ quy tìm 72, phân tích T(n)=T(n/2)+O(1) => O(log n), chương trình C++ đã test và demo HTML offline.
+
+
 ### Changed (2026-09-22 — Closest Pair beginner-first explanation)
 - Nâng demo web từ 11 lên 15 bước để người chưa học thuật toán vẫn theo được: thêm nền tảng tọa độ/khoảng cách, brute-force, trực giác Divide–Conquer–Combine, lý do sort Px/Py, lý do strip, thứ tự y, giới hạn tối đa 7 lân cận, cây đệ quy giải thích O(n log n), câu tự kiểm tra và lời thoại từng bước.
 - Đồng bộ `demo_closest_pair.cpp` sang bản O(n log n) thực sự: duy trì Px/Py đã sort, partition Py tuyến tính và không sort strip lại ở từng tầng.
