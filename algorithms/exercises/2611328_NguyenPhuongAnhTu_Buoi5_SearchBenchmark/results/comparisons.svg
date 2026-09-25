@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="500" viewBox="0 0 900 500">
+<rect width="900" height="500" fill="white"/>
+<text x="450" y="35" text-anchor="middle" font-family="sans-serif" font-size="22" font-weight="700">Số lần so sánh - thang log</text>
+<line x1="90" y1="420" x2="840" y2="420" stroke="#444"/><line x1="90" y1="70" x2="90" y2="420" stroke="#444"/>
+<g font-family="sans-serif" font-size="13" fill="#333">
+<text x="80" y="445">10^4</text><text x="320" y="445">10^5</text><text x="560" y="445">10^6</text><text x="800" y="445">10^7</text>
+<text x="52" y="410">10</text><text x="42" y="330">10^2</text><text x="42" y="250">10^4</text><text x="42" y="170">10^6</text><text x="42" y="90">10^7</text>
+</g>
+<polyline fill="none" stroke="#1f77b4" stroke-width="4" points="100,250 340,197 580,144 820,90"/>
+<polyline fill="none" stroke="#ff7f0e" stroke-width="4" points="100,405 340,397 580,391 820,383"/>
+<g fill="#1f77b4"><circle cx="100" cy="250" r="6"/><circle cx="340" cy="197" r="6"/><circle cx="580" cy="144" r="6"/><circle cx="820" cy="90" r="6"/></g>
+<g fill="#ff7f0e"><circle cx="100" cy="405" r="6"/><circle cx="340" cy="397" r="6"/><circle cx="580" cy="391" r="6"/><circle cx="820" cy="383" r="6"/></g>
+<text x="120" y="65" font-family="sans-serif" font-size="14" fill="#1f77b4">Sequential</text>
+<text x="240" y="65" font-family="sans-serif" font-size="14" fill="#ff7f0e">Binary recursive</text>
+</svg>

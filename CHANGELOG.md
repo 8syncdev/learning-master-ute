@@ -5,6 +5,10 @@ Mọi thay đổi đáng kể ghi vào đây — format [Keep a Changelog](https
 
 ## [Unreleased]
 
+### Added (2026-09-25 — Bài tập Buổi 5 Search Benchmark 2611328)
+- `algorithms/exercises/2611328_NguyenPhuongAnhTu_Buoi5_SearchBenchmark/`: bài nộp Nguyễn Phương Anh Tú (MSSV 2611328), gồm Sequential Search, Binary Search đệ quy Divide & Conquer, benchmark n=10^4..10^7, bảng runtime/số lần so sánh, biểu đồ SVG và phần nhận xét/câu trả lời cuối bài.
+
+
 ### Added (2026-09-22 — Bài tập QuickSort + Binary Search 2611328)
 - `algorithms/exercises/2611328_NguyenPhuongAnhTu_Quicksort_BinarySearch/`: bài nộp của Nguyễn Phương Anh Tú (MSSV 2611328), gồm lời giải QuickSort Lomuto từng partition, Binary Search đệ quy tìm 72, phân tích T(n)=T(n/2)+O(1) => O(log n), chương trình C++ đã test và demo HTML offline.
 

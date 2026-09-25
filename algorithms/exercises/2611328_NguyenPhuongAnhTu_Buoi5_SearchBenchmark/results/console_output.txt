@@ -1,0 +1,11 @@
+Nguyen Phuong Anh Tu - MSSV 2611328
+Bai tap Buoi 5 - Sequential Search vs Binary Search (Divide & Conquer)
+Gia dinh do: data[i] = 2*i, target = phan tu cuoi mang.
+
+n=10000    Sequential=3.170 us    Binary=0.012 us    comparisons=10000 vs 14
+n=100000   Sequential=29.971 us   Binary=0.017 us    comparisons=100000 vs 17
+n=1000000  Sequential=302.177 us  Binary=0.020 us    comparisons=1000000 vs 20
+n=10000000 Sequential=3052.798 us Binary=0.025 us    comparisons=10000000 vs 24
+
+Sequential: O(n)
+Binary recursive: T(n)=T(n/2)+O(1) => O(log n)
